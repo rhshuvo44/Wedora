@@ -87,14 +87,33 @@
     line-height: 1.6;
   }
 
-  .jm-rule-top {
-    border-top: 1px solid #2f2222;
-    border-radius: 10px;
+  .jm-outline-pill {
+    background: transparent;
+    border: 1px solid #2f2222;
+    border-radius: 999px;
     color: #2f2222;
     cursor: pointer;
-    font-size: 14px;
-    padding: 8px 12px 6px;
-    width: 100%;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    line-height: 1.2;
+    padding: 14px 30px;
+    text-transform: uppercase;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .jm-outline-pill:hover {
+    background: #2f2222;
+    color: #cec4c0;
+  }
+
+  .jm-outline-pill:focus-visible {
+    outline: 2px solid #2f2222;
+    outline-offset: 2px;
   }
 
   .jm-card-btn {
@@ -139,6 +158,11 @@
     opacity: 0.7;
     transform: translateY(0.12em);
     width: 1.15em;
+  }
+
+  .jm-wish-quote svg.jm-wish-heart {
+    color: #b3261e;
+    opacity: 0.9;
   }
 
   .jm-wish b {

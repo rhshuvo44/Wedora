@@ -58,11 +58,10 @@ export default function CalendarSection() {
 
   return (
     <Reveal>
-      <div className="jm-section">
+      <div className="jm-section jm-center" style={{ padding: "40px 0 48px" }}>
         <button
           type="button"
-          className="jm-rule-top"
-          style={{ margin: "1px 0 24px" }}
+          className="jm-outline-pill"
           onClick={() => {
             window.dispatchEvent(new CustomEvent("jm:open", { detail: "calendar" }));
           }}

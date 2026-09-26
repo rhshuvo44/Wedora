@@ -39,16 +39,16 @@ export default function ProgrammeSection() {
               background: theme.panelBg,
               borderRadius: "10px",
               position: "relative",
-              padding: "48px 0 8px",
+              padding: "24px 0",
             }}
           >
-            <div style={{ padding: "16px 24px" }}>
+            <div style={{ padding: "8px 24px 24px" }}>
               {programme.items.map((item) => (
-                <div key={item.title}>
-                  <p className="jm-center">
+                <div key={item.title} style={{ padding: "16px 0" }}>
+                  <p className="jm-center" style={{ margin: 0, lineHeight: 1.3 }}>
                     <strong style={{ fontSize: 15, fontWeight: 600 }}>{item.title}</strong>
                   </p>
-                  <p className="jm-center">
+                  <p className="jm-center" style={{ margin: "6px 0 0" }}>
                     <span className="jm-value">{item.time}</span>
                   </p>
                 </div>

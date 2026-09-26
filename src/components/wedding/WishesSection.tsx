@@ -38,7 +38,7 @@ export default function WishesSection() {
                 <div key={`${entry.name}-${i}`} className="jm-wish">
                   <p className="jm-center jm-wish-quote">
                     <i>{`\u201C${entry.message}\u201D`}</i>
-                    <Icon kind="heart" size={15} />
+                    <Icon kind="heart" size={15} className="jm-wish-heart" />
                   </p>
                   <b className="jm-center">{entry.name}</b>
                 </div>
