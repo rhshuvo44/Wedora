@@ -119,6 +119,68 @@
     padding: 8px 4px 6px;
   }
 
+  .jm-wish {
+    margin-bottom: 1.4rem;
+  }
+
+  .jm-wish:last-of-type {
+    margin-bottom: 0.5rem;
+  }
+
+  .jm-wish-quote {
+    font-size: 1em;
+    line-height: 1.7;
+  }
+
+  .jm-wish-quote svg {
+    display: inline-block;
+    height: 1.15em;
+    margin-left: 0.4em;
+    opacity: 0.7;
+    transform: translateY(0.12em);
+    width: 1.15em;
+  }
+
+  .jm-wish b {
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  .jm-wish-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 4px;
+  }
+
+  .jm-outline-btn {
+    background: transparent;
+    border: 1px solid #2f2222;
+    border-radius: 10px;
+    color: #2f2222;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 11px 20px;
+    text-transform: uppercase;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .jm-outline-btn:hover {
+    background: #2f2222;
+    color: #cec4c0;
+  }
+
+  .jm-outline-btn:focus-visible {
+    outline: 2px solid #2f2222;
+    outline-offset: 2px;
+  }
+
   .jm-footer-btn {
     align-items: center;
     color: #fff;
@@ -184,6 +246,39 @@
     justify-content: center;
     min-height: 40px;
     padding: 8px 12px 6px;
+  }
+
+  .jm-pill {
+    border-radius: 999px;
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
+  }
+
+  .jm-pill svg {
+    flex: none;
+  }
+
+  .jm-select-wrap {
+    display: block;
+    position: relative;
+  }
+
+  .jm-select-wrap svg {
+    pointer-events: none;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .jm-select {
+    appearance: none;
+    padding-right: 34px;
+  }
+
+  .jm-select-option {
+    background: #6d5b58;
+    color: #fff;
   }
 
   .jm-fade-up {

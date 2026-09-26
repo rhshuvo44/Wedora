@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { weddingData, type WishEntry } from "@/data/wedding";
+import { Icon } from "./Icons";
 import Reveal from "./Reveal";
 
 export default function WishesSection() {
@@ -19,8 +20,8 @@ export default function WishesSection() {
     return () => window.removeEventListener("jm:wish", onWish);
   }, []);
 
-  const openRsvp = (focus?: "note") => {
-    window.dispatchEvent(new CustomEvent("jm:open", { detail: { id: "rsvp", focus } }));
+  const openPopup = (id: "rsvp" | "message") => {
+    window.dispatchEvent(new CustomEvent("jm:open", { detail: id }));
   };
 
   return (
@@ -42,10 +43,12 @@ export default function WishesSection() {
               }}
             >
               {entries.map((entry, i) => (
-                <div key={`${entry.name}-${i}`} className="flex flex-col">
-                  <i className="jm-center">{`\u201C${entry.message}\u201D`}</i>
+                <div key={`${entry.name}-${i}`} className="jm-wish">
+                  <p className="jm-center jm-wish-quote">
+                    <i>{`\u201C${entry.message}\u201D`}</i>
+                    <Icon kind="heart" size={15} />
+                  </p>
                   <b className="jm-center">{entry.name}</b>
-                  <br />
                 </div>
               ))}
               {local.length > 0 && (
@@ -65,11 +68,11 @@ export default function WishesSection() {
                 </button>
               )}
             </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <button type="button" className="jm-underline-btn" onClick={() => openRsvp()}>
+            <div className="jm-wish-actions">
+              <button type="button" className="jm-outline-btn" onClick={() => openPopup("rsvp")}>
                 {wishes.rsvpLabel}
               </button>
-              <button type="button" className="jm-underline-btn" onClick={() => openRsvp("note")}>
+              <button type="button" className="jm-outline-btn" onClick={() => openPopup("message")}>
                 {wishes.messageLabel}
               </button>
             </div>

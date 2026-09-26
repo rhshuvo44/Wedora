@@ -105,8 +105,21 @@ export interface WeddingData {
     noteLabel: string;
     notePlaceholder: string;
     submitLabel: string;
+    cancelLabel: string;
     successMessage: string;
+    declineMessage: string;
+    nameRequiredMessage: string;
     maxGuests: number;
+  };
+  message: {
+    title: string;
+    nameLabel: string;
+    messageLabel: string;
+    messagePlaceholder: string;
+    submitLabel: string;
+    successMessage: string;
+    nameRequiredMessage: string;
+    messageRequiredMessage: string;
   };
   contacts: ContactEntry[];
   song: {
@@ -231,16 +244,30 @@ export const weddingData: WeddingData = {
   },
 
   rsvp: {
-    title: "RSVP & WISHES",
+    title: "RSVP & Wishes",
     attendingLabel: "Attending",
     decliningLabel: "Not Attending",
     nameLabel: "Your name",
-    guestsLabel: "Number of guests",
-    noteLabel: "Your message",
+    guestsLabel: "Total Attendance",
+    noteLabel: "Wishes",
     notePlaceholder: "Share a wish for the couple…",
-    submitLabel: "Send",
+    submitLabel: "Submit",
+    cancelLabel: "Cancel",
     successMessage: "Thank you — your response has been noted.",
+    declineMessage: "We will miss you — thank you for letting us know.",
+    nameRequiredMessage: "Please tell us your name.",
     maxGuests: 10,
+  },
+
+  message: {
+    title: "Write a Message",
+    nameLabel: "Your name",
+    messageLabel: "Your message",
+    messagePlaceholder: "Write a wish for Tasnia & Rajib…",
+    submitLabel: "Send",
+    successMessage: "Thank you — your message has been added to the wishes.",
+    nameRequiredMessage: "Please tell us your name.",
+    messageRequiredMessage: "Please write a message.",
   },
 
   contacts: [

@@ -27,33 +27,24 @@ type Phase = "closed" | "opening" | "opened";
 export default function InvitationShell() {
   const [phase, setPhase] = useState<Phase>("closed");
   const [popup, setPopup] = useState<PopupId | null>(null);
-  const [focusTarget, setFocusTarget] = useState<"note" | undefined>(undefined);
   const [navShown, setNavShown] = useState(false);
   const opened = phase === "opened";
 
   const finishOpening = useCallback(() => setPhase("opened"), []);
 
   const open = useCallback((id: PopupId) => {
-    setFocusTarget(undefined);
     setPopup(id);
   }, []);
 
   const close = useCallback(() => {
-    setFocusTarget(undefined);
     setPopup(null);
   }, []);
 
   useEffect(() => {
     const onOpen = (event: Event) => {
-      const detail = (event as CustomEvent<PopupId | { id: PopupId; focus?: "note" }>).detail;
+      const detail = (event as CustomEvent<PopupId>).detail;
       if (!detail) return;
-      if (typeof detail === "string") {
-        setFocusTarget(undefined);
-        setPopup(detail);
-      } else {
-        setFocusTarget(detail.focus);
-        setPopup(detail.id);
-      }
+      setPopup(detail);
     };
     window.addEventListener("jm:open", onOpen);
     return () => window.removeEventListener("jm:open", onOpen);
@@ -131,7 +122,7 @@ export default function InvitationShell() {
 
       <BottomNavBar shown={opened && navShown} onOpen={open} />
 
-      {opened && popup && <Popups open={popup} onClose={close} onWish={onWish} focusTarget={focusTarget} />}
+      {opened && popup && <Popups open={popup} onClose={close} onWish={onWish} />}
     </div>
   );
 }
