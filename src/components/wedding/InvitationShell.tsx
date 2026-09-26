@@ -21,6 +21,7 @@ import ProgrammeSection from "./ProgrammeSection";
 import Reveal from "./Reveal";
 import SnowCanvas from "./SnowCanvas";
 import WishesSection from "./WishesSection";
+import BackgroundMusic, { useBackgroundMusic } from "./BackgroundMusic";
 
 type Phase = "closed" | "opening" | "opened";
 
@@ -29,6 +30,7 @@ export default function InvitationShell() {
   const [popup, setPopup] = useState<PopupId | null>(null);
   const [navShown, setNavShown] = useState(false);
   const opened = phase === "opened";
+  const music = useBackgroundMusic();
 
   const finishOpening = useCallback(() => setPhase("opened"), []);
 
@@ -84,7 +86,7 @@ export default function InvitationShell() {
         aria-hidden={opened}
       >
         <Cover revealed={opened} />
-        <OpeningGate onOpened={finishOpening} />
+        <OpeningGate onOpened={finishOpening} onEngage={music.play} />
       </div>
 
       <main
@@ -120,7 +122,20 @@ export default function InvitationShell() {
         </Reveal>
       </main>
 
-      <BottomNavBar shown={opened && navShown} onOpen={open} />
+      <BottomNavBar
+        shown={opened && navShown}
+        onOpen={open}
+        musicPlaying={music.playing}
+        onToggleMusic={music.toggle}
+      />
+
+      <BackgroundMusic
+        audioRef={music.audioRef}
+        playing={music.playing}
+        blocked={music.blocked}
+        onToggle={music.toggle}
+        showToggle={opened}
+      />
 
       {opened && popup && <Popups open={popup} onClose={close} onWish={onWish} />}
     </div>

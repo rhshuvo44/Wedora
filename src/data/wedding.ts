@@ -93,6 +93,8 @@ export interface WeddingData {
   wishes: {
     title: string;
     entries: WishEntry[];
+    visibleCount: number;
+    moreLabel: string;
     rsvpLabel: string;
     messageLabel: string;
   };
@@ -124,7 +126,10 @@ export interface WeddingData {
   contacts: ContactEntry[];
   song: {
     title: string;
-    youtubeId: string;
+    src: string;
+    volume: number;
+    playLabel: string;
+    pauseLabel: string;
   };
   nav: NavItem[];
   theme: {
@@ -241,6 +246,8 @@ export const weddingData: WeddingData = {
     ],
     rsvpLabel: "RSVP Now",
     messageLabel: "Write a Message",
+    visibleCount: 5,
+    moreLabel: "More wishes are on the way",
   },
 
   rsvp: {
@@ -286,8 +293,11 @@ export const weddingData: WeddingData = {
   ],
 
   song: {
-    title: "SONG",
-    youtubeId: "dQw4w9WgXcQ",
+    title: "Background Music",
+    src: "/music/wedding-placeholder.wav",
+    volume: 0.35,
+    playLabel: "Play background music",
+    pauseLabel: "Pause background music",
   },
 
   nav: [

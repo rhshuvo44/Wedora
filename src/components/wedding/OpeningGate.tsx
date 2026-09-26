@@ -11,7 +11,13 @@ const prefersReducedMotion = () =>
   typeof window.matchMedia === "function" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export default function OpeningGate({ onOpened }: { onOpened: () => void }) {
+export default function OpeningGate({
+  onOpened,
+  onEngage,
+}: {
+  onOpened: () => void;
+  onEngage?: () => void;
+}) {
   const [clicked, setClicked] = useState(false);
   const [doorsOpen, setDoorsOpen] = useState(false);
   const [gone, setGone] = useState(false);
@@ -50,7 +56,10 @@ export default function OpeningGate({ onOpened }: { onOpened: () => void }) {
         <button
           type="button"
           className={`jm-seal${clicked ? " open" : ""}`}
-          onClick={() => setClicked(true)}
+          onClick={() => {
+            onEngage?.();
+            setClicked(true);
+          }}
           disabled={clicked}
           aria-label={`Open the invitation for ${name}`}
           style={{ color: theme.coverText }}

@@ -5,7 +5,7 @@ import { weddingData } from "@/data/wedding";
 import { buildGoogleUrl, buildIcs } from "./CalendarSection";
 import { Icon } from "./Icons";
 
-export type PopupId = "calendar" | "contact" | "location" | "message" | "rsvp" | "song";
+export type PopupId = "calendar" | "contact" | "location" | "message" | "rsvp";
 
 function Shell({ id, title, onClose, children }: { id: PopupId; title: string; onClose: () => void; children: ReactNode }) {
   useEffect(() => {
@@ -284,7 +284,7 @@ export default function Popups({
   onClose: () => void;
   onWish: (entry: { name: string; message: string }) => void;
 }) {
-  const { calendar, contacts, venue, song, rsvp, message, details } = weddingData;
+  const { calendar, contacts, venue, rsvp, message, details } = weddingData;
 
   if (!open) return null;
 
@@ -368,24 +368,6 @@ export default function Popups({
             <Icon kind="map" />
             <span>Maps</span>
           </a>
-        </div>
-      </Shell>
-    );
-  }
-
-  if (open === "song") {
-    return (
-      <Shell id="song" title={song.title} onClose={onClose}>
-        <div style={{ padding: "0 12px 4px" }}>
-          <div style={{ position: "relative", paddingTop: "56.25%" }}>
-            <iframe
-              title={song.title}
-              src={`https://www.youtube-nocookie.com/embed/${song.youtubeId}?rel=0`}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0, borderRadius: 10 }}
-            />
-          </div>
         </div>
       </Shell>
     );

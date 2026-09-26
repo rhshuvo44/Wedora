@@ -8,7 +8,8 @@ import Reveal from "./Reveal";
 export default function WishesSection() {
   const { wishes } = weddingData;
   const [local, setLocal] = useState<WishEntry[]>([]);
-  const entries = [...local, ...wishes.entries];
+  const entries = [...local, ...wishes.entries].slice(0, wishes.visibleCount);
+  const hiddenCount = local.length + wishes.entries.length - entries.length;
 
   useEffect(() => {
     const onWish = (event: Event) => {
@@ -32,16 +33,7 @@ export default function WishesSection() {
             <h5 className="jm-section-title" style={{ marginBottom: "1rem" }}>
               {wishes.title}
             </h5>
-            <div
-              id="timeline"
-              style={{
-                fontSize: "0.8em",
-                maxHeight: 336,
-                overflowY: "auto",
-                padding: "0 15px",
-                scrollbarWidth: "thin",
-              }}
-            >
+            <div id="timeline" style={{ fontSize: "0.8em" }}>
               {entries.map((entry, i) => (
                 <div key={`${entry.name}-${i}`} className="jm-wish">
                   <p className="jm-center jm-wish-quote">
@@ -51,6 +43,7 @@ export default function WishesSection() {
                   <b className="jm-center">{entry.name}</b>
                 </div>
               ))}
+              {hiddenCount > 0 && <p className="jm-wish-more">{wishes.moreLabel}</p>}
               {local.length > 0 && (
                 <button
                   type="button"
