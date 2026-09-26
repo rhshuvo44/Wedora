@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="132" height="26" viewBox="0 0 132 26">
+  <title>Lace trim divider</title>
+  <desc>Original horizontal lace band, drawn in white so it can be used as a CSS mask. Tiles seamlessly at 132x26.</desc>
+  <g fill="none" stroke="#ffffff" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M0 2.5q3 3 6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0"/>
+    <path d="M0 23.5q3-3 6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0t6 0"/>
+    <path d="M0 13H132" stroke-width="0.8" opacity="0.75"/>
+    <path d="M34 13C38 8 44 8 48 13C44 18 38 18 34 13Z"/>
+    <path d="M84 13C88 8 94 8 98 13C94 18 88 18 84 13Z"/>
+    <path d="M41 13C45 15.5 51 15.5 55 13C51 10.5 45 10.5 41 13Z"/>
+    <path d="M77 13C81 10.5 87 10.5 91 13C87 15.5 81 15.5 77 13Z"/>
+    <circle cx="24" cy="13" r="1.4" fill="#ffffff" stroke="none"/>
+    <circle cx="108" cy="13" r="1.4" fill="#ffffff" stroke="none"/>
+    <circle cx="66" cy="13" r="1.9" fill="#ffffff" stroke="none" opacity="0.9"/>
+  </g>
+  <g transform="translate(66 13)" fill="#ffffff">
+    <ellipse cx="0" cy="-5.2" rx="2.5" ry="5.2"/>
+    <ellipse cx="0" cy="-5.2" rx="2.5" ry="5.2" transform="rotate(90)"/>
+    <ellipse cx="0" cy="-5.2" rx="2.5" ry="5.2" transform="rotate(180)"/>
+    <ellipse cx="0" cy="-5.2" rx="2.5" ry="5.2" transform="rotate(270)"/>
+    <circle cx="0" cy="0" r="1.7" fill="#8a6d68"/>
+  </g>
+</svg>
