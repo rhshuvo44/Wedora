@@ -3,18 +3,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { weddingData } from "@/data/wedding";
 import BottomNavBar from "./BottomNavBar";
-import CalendarSection from "./CalendarSection";
 import Cover from "./Cover";
 import GallerySection from "./GallerySection";
 import GreetingSection from "./GreetingSection";
 import CoupleNamesSection from "./CoupleNamesSection";
-import {
-  DateDetail,
-  DressDetail,
-  TimeDetail,
-  VenueAddressDetail,
-  VenueDetail,
-} from "./DetailSections";
+import { DetailsInfoBlock, VenueAddressDetail } from "./DetailSections";
 import Popups, { type PopupId } from "./Popups";
 import OpeningGate from "./OpeningGate";
 import ProgrammeSection from "./ProgrammeSection";
@@ -101,15 +94,7 @@ export default function InvitationShell() {
           <GreetingSection />
           <CoupleNamesSection />
           <br />
-          <VenueDetail />
-          <br />
-          <DateDetail />
-          <br />
-          <TimeDetail />
-          <br />
-          <DressDetail />
-          <br />
-          <CalendarSection />
+          <DetailsInfoBlock />
           <ProgrammeSection />
           <VenueAddressDetail />
         </div>

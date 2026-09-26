@@ -322,26 +322,24 @@ export default function Popups({
           {contacts.map((c) => (
             <div key={c.phone} style={{ display: "flex", alignItems: "center", marginBottom: 16, gap: 8 }}>
               <div style={{ flex: 1, paddingLeft: 8 }}>
-                <p>{c.name}</p>
-                <small style={{ opacity: 0.7 }}>
+                <p>
+                  <strong>{c.name}</strong>
+                </p>
+                <small style={{ opacity: 0.7, fontSize: 11.5 }}>
                   <i>{c.role}</i>
                 </small>
               </div>
+              <a href={`tel:${c.phone}`} aria-label={`Call ${c.name}`} className="jm-contact-btn">
+                <Icon kind="phone" />
+              </a>
               <a
                 href={`https://wa.me/${c.whatsapp}`}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={`WhatsApp ${c.name}`}
-                style={{ color: "#fff", display: "inline-flex", padding: 4 }}
+                aria-label={`Message ${c.name}`}
+                className="jm-contact-btn"
               >
                 <Icon kind="whatsapp" />
-              </a>
-              <a
-                href={`tel:${c.phone}`}
-                aria-label={`Call ${c.name}`}
-                style={{ color: "#fff", display: "inline-flex", padding: 4 }}
-              >
-                <Icon kind="phone" />
               </a>
             </div>
           ))}

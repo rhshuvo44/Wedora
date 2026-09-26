@@ -1,7 +1,6 @@
 "use client";
 
 import { weddingData } from "@/data/wedding";
-import Reveal from "./Reveal";
 
 const DAY = 24;
 const MONTH = 9;
@@ -57,19 +56,15 @@ export default function CalendarSection() {
   const { calendar } = weddingData;
 
   return (
-    <Reveal>
-      <div className="jm-section jm-center" style={{ padding: "40px 0 48px" }}>
-        <button
-          type="button"
-          className="jm-outline-pill"
-          onClick={() => {
-            window.dispatchEvent(new CustomEvent("jm:open", { detail: "calendar" }));
-          }}
-        >
-          {calendar.buttonLabel}
-        </button>
-      </div>
-    </Reveal>
+    <button
+      type="button"
+      className="jm-outline-cta"
+      onClick={() => {
+        window.dispatchEvent(new CustomEvent("jm:open", { detail: "calendar" }));
+      }}
+    >
+      {calendar.buttonLabel}
+    </button>
   );
 }
 

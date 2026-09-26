@@ -1,90 +1,63 @@
 import type { ReactNode } from "react";
 import { weddingData } from "@/data/wedding";
+import CalendarSection from "./CalendarSection";
 import Reveal from "./Reveal";
 
-interface DetailSectionProps {
-  label: string;
-  children: ReactNode;
+function InfoField({ label, value, color }: { label: string; value: ReactNode; color?: string }) {
+  return (
+    <div className="jm-info-field">
+      <h5 className="jm-info-label" style={color ? { color } : undefined}>
+        {label}
+      </h5>
+      <p className="jm-center jm-info-value">{value}</p>
+    </div>
+  );
 }
 
-export function DetailSection({ label, children }: DetailSectionProps) {
+export function DetailsInfoBlock() {
+  const { details, dressCode, theme } = weddingData;
+  const { lead, day, ordinal, tail } = details.date;
+
   return (
     <Reveal>
-      <section>
-        <h5 className="jm-section-title" style={{ color: weddingData.theme.titleText }}>
-          {label}
-        </h5>
-        {children}
-      </section>
-    </Reveal>
-  );
-}
-
-export function VenueDetail() {
-  return (
-    <DetailSection label={weddingData.details.venue.label}>
-      <p className="jm-value jm-center" style={{ color: weddingData.theme.venueText }}>
-        {weddingData.details.venue.value}
-      </p>
-    </DetailSection>
-  );
-}
-
-export function DateDetail() {
-  const { lead, day, ordinal, tail } = weddingData.details.date;
-  return (
-    <DetailSection label={weddingData.details.date.label}>
-      <p className="jm-center">
-        {lead} {day}
-        <sup style={{ fontSize: "0.75em" }}>{ordinal}</sup> {tail}
-      </p>
-    </DetailSection>
-  );
-}
-
-export function TimeDetail() {
-  return (
-    <DetailSection label={weddingData.details.time.label}>
-      <p className="jm-center">{weddingData.details.time.value}</p>
-    </DetailSection>
-  );
-}
-
-export function DressDetail() {
-  return (
-    <Reveal>
-      <section>
-        <p className="jm-center">
-          <strong style={{ fontSize: 15, color: weddingData.theme.dressText, fontWeight: 600 }}>
-            {weddingData.dressCode.label}
-          </strong>
-        </p>
-        <p className="jm-center">
-          <span className="jm-value" style={{ color: weddingData.theme.dressText }}>
-            {weddingData.dressCode.value}
-          </span>
-        </p>
+      <section className="jm-section jm-center" style={{ paddingTop: 40, paddingBottom: 8 }}>
+        <InfoField label={details.venue.label} value={details.venue.value} color={theme.venueText} />
+        <InfoField
+          label={details.date.label}
+          value={
+            <>
+              {lead} {day}
+              <sup className="jm-ordinal">{ordinal}</sup> {tail}
+            </>
+          }
+        />
+        <InfoField label={details.time.label} value={details.time.value} />
+        <InfoField label={dressCode.label} value={dressCode.value} color={theme.dressText} />
+        <div className="jm-info-cta">
+          <CalendarSection />
+        </div>
       </section>
     </Reveal>
   );
 }
 
 export function VenueAddressDetail() {
-  const { venue } = weddingData;
+  const { venue, theme } = weddingData;
   return (
     <Reveal>
-      <div style={{ padding: "24px 20px", margin: "24px 0" }}>
-        <p className="jm-center">{venue.label}</p>
-        <p className="jm-center">________________________________</p>
-        <p className="jm-center">{venue.address}</p>
-        <p className="jm-center">_________________________________</p>
-        <p className="jm-center">
-          <br />
+      <section className="jm-section jm-center" style={{ paddingTop: 40, paddingBottom: 40, margin: "24px 0" }}>
+        <h5 className="jm-section-title" style={{ color: theme.titleText }}>
+          {venue.label}
+        </h5>
+        <hr className="jm-divider" style={{ margin: "18px 0" }} />
+        <p className="jm-value" style={{ color: theme.venueText }}>
+          {venue.address}
         </p>
-        <p className="jm-center">
+        <hr className="jm-divider" style={{ margin: "18px 0" }} />
+        <p className="jm-center" style={{ marginTop: "28px" }}>
           <strong>{venue.note}</strong>
         </p>
-      </div>
+      </section>
     </Reveal>
   );
 }

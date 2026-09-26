@@ -88,6 +88,7 @@ export interface WeddingData {
     mapUrl: string;
   };
   gallery: {
+    monochromeCount: number;
     images: string[];
   };
   wishes: {
@@ -233,7 +234,15 @@ export const weddingData: WeddingData = {
   },
 
   gallery: {
-    images: ["/images/gallery/image-1.jpg", "/images/gallery/image-2.jpg"],
+    monochromeCount: 2,
+    images: [
+      "/images/gallery/image-1.jpg",
+      "/images/gallery/image-2.jpg",
+      "/images/gallery/image-3.jpg",
+      "/images/gallery/image-4.jpg",
+      "/images/gallery/image-5.jpg",
+      "/images/gallery/image-6.jpg",
+    ],
   },
 
   wishes: {

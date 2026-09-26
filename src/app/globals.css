@@ -87,6 +87,68 @@
     line-height: 1.6;
   }
 
+  .jm-info-field {
+    margin-bottom: 20px;
+  }
+
+  .jm-info-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+
+  .jm-info-value {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .jm-ordinal {
+    font-size: 0.75em;
+  }
+
+  .jm-info-cta {
+    margin-top: 28px;
+  }
+
+  .jm-divider {
+    border: 0;
+    border-top: 1px solid rgb(47 34 34 / 0.35);
+    margin: 0;
+    width: 100%;
+  }
+
+  .jm-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 24px 0;
+  }
+
+  .jm-gallery-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .jm-gallery-photo {
+    aspect-ratio: 1 / 1;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .jm-gallery-row .jm-gallery-photo {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .jm-gallery-mono {
+    filter: grayscale(1) contrast(1.05);
+  }
+
   .jm-outline-pill {
     background: transparent;
     border: 1px solid #2f2222;
@@ -112,6 +174,34 @@
   }
 
   .jm-outline-pill:focus-visible {
+    outline: 2px solid #2f2222;
+    outline-offset: 2px;
+  }
+
+  .jm-outline-cta {
+    background: transparent;
+    border: 1px solid #2f2222;
+    border-radius: 999px;
+    color: #2f2222;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1.2;
+    padding: 10px 24px;
+    text-transform: uppercase;
+    transition:
+      background 0.25s ease,
+      color 0.25s ease;
+  }
+
+  .jm-outline-cta:hover {
+    background: #2f2222;
+    color: #cec4c0;
+  }
+
+  .jm-outline-cta:focus-visible {
     outline: 2px solid #2f2222;
     outline-offset: 2px;
   }
@@ -310,6 +400,27 @@
   .jm-select-option {
     background: #6d5b58;
     color: #fff;
+  }
+
+  .jm-contact-btn {
+    align-items: center;
+    border: 1px solid rgb(255 255 255 / 0.55);
+    border-radius: 999px;
+    color: #fff;
+    display: inline-flex;
+    height: 38px;
+    justify-content: center;
+    transition: background 0.25s ease;
+    width: 38px;
+  }
+
+  .jm-contact-btn:hover {
+    background: rgb(255 255 255 / 0.18);
+  }
+
+  .jm-contact-btn:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
   }
 
   .jm-music-toggle {
