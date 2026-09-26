@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 620" preserveAspectRatio="xMidYMid slice" width="430" height="620">
+  <defs>
+    <linearGradient id="pgBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c3b6b1"/>
+      <stop offset="0.5" stop-color="#cec4c0"/>
+      <stop offset="1" stop-color="#c0b3ae"/>
+    </linearGradient>
+    <g id="pgVine" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+      <path d="M0 0 C 40 -14 78 -10 118 4 C 158 18 198 18 238 4 C 278 -10 316 -14 356 0"/>
+      <path d="M40 -9 C 52 -22 66 -22 76 -12" />
+      <path d="M120 4 C 132 -9 146 -9 156 2" />
+      <path d="M200 14 C 212 1 226 1 236 12" />
+      <path d="M280 2 C 292 -11 306 -11 316 0" />
+      <path d="M340 -10 C 352 -23 366 -23 376 -13" />
+    </g>
+    <g id="pgBloom">
+      <path d="M0 -7 C 4 -4 4 4 0 7 C -4 4 -4 -4 0 -7 Z"/>
+      <path d="M-7 0 C -4 4 4 4 7 0 C 4 -4 -4 -4 -7 0 Z"/>
+      <circle r="2"/>
+    </g>
+  </defs>
+
+  <rect width="430" height="620" fill="url(#pgBase)"/>
+
+  <g color="#a08c88" opacity="0.4">
+    <use href="#pgVine" transform="translate(37 70)"/>
+    <use href="#pgVine" transform="translate(37 250)"/>
+    <use href="#pgVine" transform="translate(37 430)"/>
+    <use href="#pgVine" transform="translate(37 590)"/>
+  </g>
+
+  <g color="#9c8884" opacity="0.55">
+    <use href="#pgBloom" transform="translate(96 51) scale(0.9)"/>
+    <use href="#pgBloom" transform="translate(258 231) scale(0.7)"/>
+    <use href="#pgBloom" transform="translate(60 411) scale(0.8)"/>
+    <use href="#pgBloom" transform="translate(330 571) scale(0.9)"/>
+  </g>
+
+  <g color="#b19d99" opacity="0.3">
+    <circle cx="150" cy="120" r="1.5"/>
+    <circle cx="300" cy="330" r="1.5"/>
+    <circle cx="120" cy="520" r="1.5"/>
+    <circle cx="350" cy="150" r="1.5"/>
+    <circle cx="215" cy="60" r="1.2"/>
+  </g>
+</svg>

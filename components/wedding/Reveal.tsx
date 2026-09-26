@@ -1,45 +1,51 @@
 "use client";
 
-import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { useInvitation } from "./InvitationProvider";
 
 interface RevealProps {
   children: ReactNode;
-  className?: string;
+  variant?: "up" | "zoom";
   delay?: number;
-  distance?: number;
-  amount?: number;
+  className?: string;
 }
 
-export function Reveal({
-  children,
-  className,
-  delay = 0,
-  distance = 22,
-  amount = 0.2,
-}: RevealProps) {
-  const { opened } = useInvitation();
-  const reduceMotion = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount });
-  const [mounted, setMounted] = useState(false);
+export default function Reveal({ children, variant = "up", delay = 0, className = "" }: RevealProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [shown, setShown] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
 
-  const ready = !mounted || (opened && inView);
+    if (typeof IntersectionObserver === "undefined") {
+      setShown(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setShown(true);
+            observer.disconnect();
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={className}
-      initial={false}
-      animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: distance }}
-      transition={
-        reduceMotion ? { duration: 0 } : { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }
-      }
+      data-shown={shown ? "true" : "false"}
+      className={`${variant === "zoom" ? "jm-zoom-in" : "jm-fade-up"} ${className}`.trim()}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

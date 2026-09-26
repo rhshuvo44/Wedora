@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
-import { weddingData } from "@/data/wedding";
 
 const baseUrl = "https://wedora.example.com";
+const lastModified = new Date("2025-10-24T16:00:00");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: baseUrl,
-      lastModified: new Date(weddingData.wedding.countdownDate),
+      lastModified,
       changeFrequency: "monthly",
       priority: 1,
     },

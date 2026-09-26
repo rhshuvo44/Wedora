@@ -1,144 +1,76 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Disc3, Mail, MapPin, Phone } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { weddingData } from "@/data/wedding";
-import { cn } from "@/lib/cn";
-import { useInvitation } from "./InvitationProvider";
+import type { PopupId } from "./Popups";
 
-interface NavItem {
-  key: string;
-  label: string;
-  ariaLabel: string;
-  target: string;
-  Icon: typeof Phone;
+function NavIcon({ id }: { id: PopupId }) {
+  const common = { width: 24, height: 24, viewBox: "0 0 24 24", fill: "currentColor" } as const;
+  const paths: Record<PopupId, React.ReactNode> = {
+    calendar: <path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zm12 8v9H5v-9z" />,
+    contact: <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.4 11.4 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02z" />,
+    location: <path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5" />,
+    rsvp: <path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8l-5 4V6a2 2 0 0 1 2-2m2.5 4.5a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5m6 0a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5" />,
+    song: <path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18m-1.5 4.5v6a3.25 3.25 0 1 1-1.5-2.8V5.6l5-1.4v7.3a3.25 3.25 0 1 1-1.5-2.8V6.9z" />,
+  };
+  return <svg {...common}>{paths[id]}</svg>;
 }
 
-const navItems: NavItem[] = [
-  {
-    key: "contact",
-    label: weddingData.nav.contact.label,
-    ariaLabel: weddingData.nav.contact.ariaLabel,
-    target: weddingData.nav.contact.target,
-    Icon: Phone,
-  },
-  {
-    key: "music",
-    label: weddingData.nav.music.label,
-    ariaLabel: weddingData.nav.music.ariaLabel,
-    target: weddingData.nav.music.target,
-    Icon: Disc3,
-  },
-  {
-    key: "location",
-    label: weddingData.nav.location.label,
-    ariaLabel: weddingData.nav.location.ariaLabel,
-    target: weddingData.nav.location.target,
-    Icon: MapPin,
-  },
-  {
-    key: "rsvp",
-    label: weddingData.nav.rsvp.label,
-    ariaLabel: weddingData.nav.rsvp.ariaLabel,
-    target: weddingData.nav.rsvp.target,
-    Icon: Mail,
-  },
-];
+export default function BottomNavBar({
+  shown,
+  onOpen,
+}: {
+  shown: boolean;
+  onOpen: (id: PopupId) => void;
+}) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-export function BottomNavBar() {
-  const { opened, musicSupported, musicPlaying, toggleMusic } = useInvitation();
-  const [activeTarget, setActiveTarget] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!opened) return;
-    const sections = navItems
-      .map((item) => document.getElementById(item.target))
-      .filter((element): element is HTMLElement => Boolean(element));
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) setActiveTarget(visible.target.id);
-      },
-      { rootMargin: "-45% 0px -45% 0px", threshold: [0, 0.25, 0.5, 1] },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, [opened]);
-
-  const goTo = useCallback((target: string) => {
-    if (!target) return;
-    const element = document.getElementById(target);
-    if (!element) return;
-    element.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-      block: "start",
-    });
-  }, []);
-
-  if (!opened) return null;
+  const items = weddingData.nav;
 
   return (
-    <motion.nav
-      aria-label="Invitation sections"
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.25 }}
-      className="fixed inset-x-0 bottom-0 z-50 bg-mauve"
-      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+    <nav
+      id="footer"
+      aria-label="Invitation actions"
+      style={{
+        position: "fixed",
+        bottom: shown ? 0 : "-20%",
+        left: "50%",
+        transform: "translateX(-50%)",
+        width: "100%",
+        maxWidth: 430,
+        height: 80,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        background: weddingData.theme.footerBg,
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 -10px 10px -12px rgba(0,0,0,0.5)",
+        zIndex: 10,
+        opacity: mounted && shown ? 1 : 0,
+        visibility: mounted && shown ? "visible" : "hidden",
+        pointerEvents: shown ? "auto" : "none",
+        transition: "bottom .5s, opacity .5s, visibility .5s",
+      }}
     >
-      <ul className="mx-auto flex max-w-lg items-stretch justify-around px-1 pt-1.5 pb-1.5">
-        {navItems.map(({ key, label, ariaLabel, target, Icon }) => {
-          const isMusic = key === "music";
-          const isActive = !isMusic && activeTarget === target;
-          const musicOn = isMusic && musicPlaying;
-
-          return (
-            <li key={key} className="flex-1">
-              <button
-                type="button"
-                onClick={() => (isMusic ? toggleMusic() : goTo(target))}
-                aria-label={ariaLabel}
-                aria-pressed={isMusic ? musicPlaying : undefined}
-                aria-current={isActive ? "true" : undefined}
-                className={cn(
-                  "flex min-h-14 w-full flex-col items-center justify-center gap-1 rounded-[2px] px-1 py-1.5 transition-colors duration-300",
-                  isActive ? "text-cream-light" : "text-cream/70 hover:text-cream-light",
-                  isMusic && !musicSupported && "opacity-50",
-                )}
-              >
-                <span className="relative flex h-6 w-9 items-center justify-center">
-                  <Icon
-                    className={cn(
-                      "h-5 w-5 transition-transform duration-300",
-                      musicOn && "scale-110",
-                    )}
-                    strokeWidth={1.4}
-                    aria-hidden="true"
-                  />
-                  {isActive ? (
-                    <motion.span
-                      layoutId="nav-active"
-                      aria-hidden="true"
-                      className="absolute -bottom-1 h-[2px] w-5 rounded-full bg-cream-light"
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                    />
-                  ) : null}
-                </span>
-                <span className="text-[9px] font-semibold uppercase tracking-soft">{label}</span>
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-      <div aria-hidden="true" className="h-[3px] w-full lace-divider opacity-70" />
-    </motion.nav>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {items.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            onClick={() => onOpen(item.id)}
+            aria-label={item.ariaLabel}
+            className="jm-footer-btn"
+            style={{ background: "transparent", border: 0, font: "inherit" }}
+          >
+            <span style={{ display: "inline-flex", color: "#fff" }}>
+              <NavIcon id={item.id} />
+            </span>
+            <small>{item.label}</small>
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 }

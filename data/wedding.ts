@@ -1,33 +1,26 @@
+export const BISMILLAH = "بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
-export const BISMILLAH = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
-
-export interface Person {
+export interface ContactEntry {
   name: string;
-  fullName: string;
-  title?: string;
+  role: string;
+  phone: string;
+  whatsapp: string;
 }
 
-export interface EventParents {
-  sideA: string[];
-  joiner: string;
-  sideB: string[];
+export interface WishEntry {
+  message: string;
+  name: string;
 }
 
-export interface WeddingEvent {
-  id: string;
+export interface ProgrammeItem {
   title: string;
-  subtitle?: string;
-  date: string;
-  dateShort?: string;
   time: string;
-  venue: string;
-  address: string;
-  mapUrl: string;
-  bismillah?: boolean;
-  bismillahText?: string;
-  gratitudeLine?: string;
-  parents: EventParents;
-  note?: string;
+}
+
+export interface NavItem {
+  id: "contact" | "song" | "location" | "rsvp";
+  label: string;
+  ariaLabel: string;
 }
 
 export interface WeddingData {
@@ -37,419 +30,259 @@ export interface WeddingData {
     ogImage: string;
     favicon: string;
   };
-  bride: Person;
-  groom: Person;
-  joiner: string;
-  wedding: {
-    dateShort: string;
-    date: string;
-    time: string;
-    countdownDate: string;
-    countdownCompleteMessage: string;
-  };
-  events: WeddingEvent[];
-  venue: {
-    name: string;
-    address: string;
-    mapUrl: string;
-    directionsLabel: string;
-  };
-  story: {
-    eyebrow: string;
-    title: string;
-    description: string;
-    highlights: { year: string; title: string; description: string }[];
-  };
-  gallery: { images: string[]; caption: string };
-  contact: {
-    label: string;
-    phone: string;
-    phoneHref: string;
-    lines: { label: string; value: string; href: string }[];
-  };
-  rsvp: {
-    title: string;
-    description: string;
-    attendingOptions: string[];
-    maxGuests: number;
-    submitLabel: string;
-    successMessage: string;
-  };
-  music: {
-    enabled: boolean;
-    src: string;
-    label: string;
-  };
-  nav: {
-    contact: { label: string; target: string; ariaLabel: string };
-    music: { label: string; target: string; ariaLabel: string };
-    location: { label: string; target: string; ariaLabel: string };
-    rsvp: { label: string; target: string; ariaLabel: string };
-  };
-  closing: {
-    eyebrow: string;
-    line: string;
-    signature: string;
-  };
-  footer: {
-    line: string;
-    backToTop: string;
-  };
-  copy: WeddingCopy;
-}
-
-export interface WeddingCopy {
   cover: {
-    eyebrow: string;
-    heading: string;
-    open: string;
-    namesLine: string;
-    dialogLabel: string;
+    invitationType: string;
+    brideNick: string;
+    groomNick: string;
+    joiner: string;
+    dateShort: string;
+    image: string;
   };
-  hero: {
-    eyebrow: string;
+  greeting: {
+    bismillah: string;
     gratitude: string;
-    request: string;
-    scrollCue: string;
+    rule: string;
+  };
+  families: {
+    brideParents: [string, string];
+    joiner: string;
+    groomParents: [string, string];
+  };
+  invite: {
+    lines: string[];
   };
   couple: {
-    eyebrow: string;
-    title: string;
-    brideRole: string;
-    groomRole: string;
+    bride: string;
+    groom: string;
+    joiner: string;
   };
-  saveTheDate: {
-    eyebrow: string;
-    title: string;
-    labels: { date: string; time: string; venue: string };
-  };
-  countdown: {
-    eyebrow: string;
-    title: string;
-    units: { days: string; hours: string; minutes: string; seconds: string };
-    completeLabel: string;
-  };
-    events: {
-      eyebrow: string;
-      title: string;
-      progress: string;
-      labels: { date: string; time: string; venue: string; address: string };
-      directions: string;
+  details: {
+    venue: { label: string; value: string };
+    date: {
+      label: "DATE";
+      lead: string;
+      day: string;
+      ordinal: string;
+      tail: string;
     };
-  gallery: {
-    eyebrow: string;
-    title: string;
-    openImage: string;
-    close: string;
-    previous: string;
-    next: string;
-    counter: string;
+    time: { label: string; value: string };
+  };
+  dressCode: {
+    label: string;
+    value: string;
+  };
+  calendar: {
+    buttonLabel: string;
+    date: string;
+    time: string;
+    appleLabel: string;
+    googleLabel: string;
+  };
+  programme: {
+    items: ProgrammeItem[];
   };
   venue: {
-    eyebrow: string;
-    title: string;
-    labels: { venue: string; address: string };
-    directions: string;
+    label: string;
+    address: string;
+    note: string;
+    mapUrl: string;
   };
-  contact: {
-    eyebrow: string;
+  gallery: {
+    images: string[];
+  };
+  wishes: {
     title: string;
-    call: string;
+    entries: WishEntry[];
+    rsvpLabel: string;
+    messageLabel: string;
   };
   rsvp: {
-    eyebrow: string;
-    fields: {
-      name: string;
-      attendance: string;
-      guests: string;
-      message: string;
-      messagePlaceholder: string;
-    };
-      submitting: string;
-      nameError: string;
-      successReset: string;
+    title: string;
+    attendingLabel: string;
+    decliningLabel: string;
+    nameLabel: string;
+    guestsLabel: string;
+    noteLabel: string;
+    notePlaceholder: string;
+    submitLabel: string;
+    successMessage: string;
+    maxGuests: number;
+  };
+  contacts: ContactEntry[];
+  song: {
+    title: string;
+    youtubeId: string;
+  };
+  nav: NavItem[];
+  theme: {
+    bodyBg: string;
+    bodyText: string;
+    coverText: string;
+    coverSubText: string;
+    titleText: string;
+    inviteText: string;
+    venueText: string;
+    dressText: string;
+    panelBg: string;
+    panelOverlay: string;
+    surface: string;
+    footerBg: string;
+    dotInactive: string;
   };
 }
 
 export const weddingData: WeddingData = {
   meta: {
-    title: "Tasnia & Rajib — Wedding Invitation",
+    title: "Tasnia & Rajib — The Nikkah Of",
     description:
-      "You are warmly invited to the wedding of Tasnia Akter and Rajib Hossain on Friday, 24 October 2025 in Dhaka, Bangladesh.",
+      "Tasnia Wahid and Mehadi Rajib Hassan invite you to their Nikkah on Friday, 24 October 2025 at Al Noor Banquet Hall, Norcross, Georgia.",
     ogImage: "/images/couple/og-image.jpg",
     favicon: "/decorations/favicon.svg",
   },
 
-  groom: {
-    name: "Rajib",
-    fullName: "Rajib Hossain",
-    title: "Son of",
+  cover: {
+    invitationType: "The Nikkah Of",
+    brideNick: "Tasnia",
+    groomNick: "Rajib",
+    joiner: "&",
+    dateShort: "Friday• 10.24.25",
+    image: "/patterns/cover-vintage.svg",
   },
 
-  bride: {
-    name: "Tasnia",
-    fullName: "Tasnia Akter",
-    title: "Daughter of",
+  greeting: {
+    bismillah: BISMILLAH,
+    gratitude: "With Joy & Gratitude to Almighty Allah",
+    rule: "___________________________________",
   },
 
-  joiner: "&",
+  families: {
+    brideParents: ["Md Wahid Uz Zaman", "Yasmin Sultana"],
+    joiner: "together with",
+    groomParents: ["Abul Hussain Jitu", "Kawsarun Nessa Begum"],
+  },
 
-  wedding: {
-    dateShort: "Friday • 10.24.25",
+  invite: {
+    lines: ["Cordially invite you", "to the Nikkah ceremony of our daughter and son"],
+  },
+
+  couple: {
+    bride: "Tasnia Wahid",
+    groom: "Mehadi Rajib Hassan",
+    joiner: "&",
+  },
+
+  details: {
+    venue: { label: "VENUE", value: "Al Noor Banquet Hall" },
+    date: {
+      label: "DATE",
+      lead: "Friday,",
+      day: "24",
+      ordinal: "th",
+      tail: "October 2025",
+    },
+    time: { label: "TIME", value: "4:00 PM - 11:30 PM" },
+  },
+
+  dressCode: {
+    label: "Dress Code",
+    value: "Ivory/Golden (No Red/Black)",
+  },
+
+  calendar: {
+    buttonLabel: "Save The Date",
     date: "Friday, 24 October 2025",
-    time: "7:00 PM onwards",
-    countdownDate: "2025-10-24T19:00:00",
-    countdownCompleteMessage: "Today is the day — thank you for celebrating with us.",
+    time: "4:00 PM - 11:30 PM",
+    appleLabel: "Apple",
+    googleLabel: "Google",
   },
 
-  events: [
-    {
-      id: "engagement",
-      title: "Engagement",
-      subtitle: "Ring Ceremony",
-      date: "Sunday, 19 October 2025",
-      dateShort: "19.10.25",
-      time: "5:00 PM",
-      venue: "Rose Garden Hall",
-      address: "Gulshan Avenue, Gulshan 1, Dhaka 1212",
-      mapUrl: "https://maps.google.com/?q=Gulshan+Dhaka+Bangladesh",
-      bismillah: true,
-      gratitudeLine: "With Joy & Gratitude to Almighty Allah",
-      parents: {
-        sideA: ["Md Wahid Uz Zaman", "Yasmin Sultana"],
-        joiner: "together with",
-        sideB: ["Abul Hussain Jitu", "Kawsarun Nessa Begum"],
-      },
-      note: "Formal attire requested.",
-    },
-    {
-      id: "holud",
-      title: "Holud & Mehendi",
-      subtitle: "Gaye Holud Ceremony",
-      date: "Tuesday, 21 October 2025",
-      dateShort: "21.10.25",
-      time: "11:00 AM",
-      venue: "Lotus Convention Centre",
-      address: "Road 11, Banani, Dhaka 1213",
-      mapUrl: "https://maps.google.com/?q=Banani+Dhaka+Bangladesh",
-      bismillah: true,
-      gratitudeLine: "With Joy & Gratitude to Almighty Allah",
-      parents: {
-        sideA: ["Md Wahid Uz Zaman", "Yasmin Sultana"],
-        joiner: "together with",
-        sideB: ["Abul Hussain Jitu", "Kawsarun Nessa Begum"],
-      },
-      note: "Yellow and green are most welcome.",
-    },
-    {
-      id: "wedding",
-      title: "Wedding",
-      subtitle: "Baraat & Nikah",
-      date: "Friday, 24 October 2025",
-      dateShort: "24.10.25",
-      time: "7:00 PM",
-      venue: "Bismillah Rosewood Hall",
-      address: "Shyamoli, Mohammadpur, Dhaka 1207",
-      mapUrl: "https://maps.google.com/?q=Mohammadpur+Dhaka+Bangladesh",
-      bismillah: true,
-      gratitudeLine: "With Joy & Gratitude to Almighty Allah",
-      parents: {
-        sideA: ["Md Wahid Uz Zaman", "Yasmin Sultana"],
-        joiner: "together with",
-        sideB: ["Abul Hussain Jitu", "Kawsarun Nessa Begum"],
-      },
-      note: "Dinner served after the nikah.",
-    },
-    {
-      id: "reception",
-      title: "Reception",
-      subtitle: "Dinner & Family Gathering",
-      date: "Saturday, 25 October 2025",
-      dateShort: "25.10.25",
-      time: "6:30 PM",
-      venue: "The Courtyard, Gulshan",
-      address: "Gulshan 2, Dhaka 1212",
-      mapUrl: "https://maps.google.com/?q=Gulshan+2+Dhaka+Bangladesh",
-      bismillah: true,
-      gratitudeLine: "With Joy & Gratitude to Almighty Allah",
-      parents: {
-        sideA: ["Md Wahid Uz Zaman", "Yasmin Sultana"],
-        joiner: "together with",
-        sideB: ["Abul Hussain Jitu", "Kawsarun Nessa Begum"],
-      },
-      note: "All relatives and friends are warmly invited.",
-    },
-  ],
+  programme: {
+    items: [
+      { title: "Nikkah Ceremony", time: "4:30 PM - 5:30 PM" },
+      { title: "Snacks", time: "5:30 PM - 6:30 PM" },
+      { title: "Entertainment", time: "6:30 PM - 8:00 PM" },
+      { title: "Dinner", time: "8:00 PM - 9:30 PM" },
+      { title: "Rusmat", time: "10:00 PM - 11:30 PM" },
+      { title: "Program Ends", time: "11:30 PM" },
+    ],
+  },
 
   venue: {
-    name: "Bismillah Rosewood Hall",
-    address: "Shyamoli, Mohammadpur, Dhaka 1207, Bangladesh",
-    mapUrl: "https://maps.google.com/?q=Mohammadpur+Dhaka+Bangladesh",
-    directionsLabel: "Open in Google Maps",
-  },
-
-  story: {
-    eyebrow: "Our Story",
-    title: "Two families, one blessing",
-    description:
-      "Our families crossed paths long before either of us knew it was written. What began as a simple introduction grew into daily conversations, quiet laughter and a love we could not have planned for. Surrounded by the people we love most, we are grateful to begin this chapter together.",
-    highlights: [
-      {
-        year: "2019",
-        title: "The first hello",
-        description: "Introduced by family at a quiet afternoon gathering.",
-      },
-      {
-        year: "2022",
-        title: "Falling slowly",
-        description: "Long walks, shared playlists and a friendship that deepened.",
-      },
-      {
-        year: "2025",
-        title: "A promise kept",
-        description: "A wedding day, surrounded by everyone we love.",
-      },
-    ],
+    label: "Venue Address",
+    address: "6010 Singleton Rd, Norcross, GA 30093",
+    note: "We look forward to celebrating with you!",
+    mapUrl: "https://share.google/nDyJTfYirYyOYKEwN",
   },
 
   gallery: {
-    images: [
-      "/images/gallery/image-1.jpg",
-      "/images/gallery/image-2.jpg",
-      "/images/gallery/image-3.jpg",
-      "/images/gallery/image-4.jpg",
-      "/images/gallery/image-5.jpg",
-      "/images/gallery/image-6.jpg",
-    ],
-    caption: "Moments from the days leading up to our wedding",
+    images: ["/images/gallery/image-1.jpg", "/images/gallery/image-2.jpg"],
   },
 
-  contact: {
-    label: "Contact",
-    phone: "+880 1700 000000",
-    phoneHref: "tel:+8801700000000",
-    lines: [
-      { label: "Rajib Hossain", value: "+880 1700 000000", href: "tel:+8801700000000" },
-      { label: "Tasnia Akter", value: "+880 1800 000000", href: "tel:+8801800000000" },
+  wishes: {
+    title: "WISHES",
+    entries: [
+      { message: "May Allah bless you both and fill your new life with love and barakah.", name: "A Friend" },
+      { message: "Wishing you a lifetime of happiness, health and togetherness.Congratulations!", name: "Family & Friends" },
+      { message: "Alhamdulillah for this beautiful journey. May your home always be a place of peace.", name: "Well Wishers" },
+      { message: "So happy for you two. May every step ahead bring you closer together.", name: "With Love" },
     ],
+    rsvpLabel: "RSVP Now",
+    messageLabel: "Write a Message",
   },
 
   rsvp: {
-    title: "Kindly respond",
-    description:
-      "Please let us know if you can join us. Your reply helps us plan the seating and the table count.",
-    attendingOptions: ["Joyfully accepts", "Regretfully declines"],
-    maxGuests: 6,
-    submitLabel: "Send RSVP",
+    title: "RSVP & WISHES",
+    attendingLabel: "Attending",
+    decliningLabel: "Not Attending",
+    nameLabel: "Your name",
+    guestsLabel: "Number of guests",
+    noteLabel: "Your message",
+    notePlaceholder: "Share a wish for the couple…",
+    submitLabel: "Send",
     successMessage: "Thank you — your response has been noted.",
+    maxGuests: 10,
   },
 
-  music: {
-    enabled: true,
-    src: "/music/wedding-placeholder.wav",
-    label: "Wedding song",
+  contacts: [
+    {
+      name: "Md Wahid Uz Zaman",
+      role: "Father of Bride",
+      phone: "6789865433",
+      whatsapp: "16789865433",
+    },
+    {
+      name: "Abul Hussain Jitu",
+      role: "Father of Groom",
+      phone: "6464640666",
+      whatsapp: "16464640666",
+    },
+  ],
+
+  song: {
+    title: "SONG",
+    youtubeId: "dQw4w9WgXcQ",
   },
 
-  nav: {
-    contact: {
-      label: "Contact",
-      target: "contact",
-      ariaLabel: "Jump to the contact section",
-    },
-    music: {
-      label: "Song",
-      target: "music",
-      ariaLabel: "Play or pause the wedding song",
-    },
-    location: {
-      label: "Location",
-      target: "venue",
-      ariaLabel: "Jump to the venue and map",
-    },
-    rsvp: { label: "RSVP", target: "rsvp", ariaLabel: "Jump to the RSVP form" },
-  },
+  nav: [
+    { id: "contact", label: "Contact", ariaLabel: "Open the contact details" },
+    { id: "song", label: "Song", ariaLabel: "Play the wedding song" },
+    { id: "location", label: "Location", ariaLabel: "Open the venue location" },
+    { id: "rsvp", label: "RSVP", ariaLabel: "Open the RSVP form" },
+  ],
 
-  closing: {
-    eyebrow: "With love",
-    line: "With love, gratitude and endless blessings,",
-    signature: "Rajib & Tasnia",
-  },
-
-  footer: {
-    line: "Made with love for our family and friends.",
-    backToTop: "Back to the top",
-  },
-
-  copy: {
-    cover: {
-      eyebrow: "Together with their families",
-      heading: "The Wedding of",
-      open: "Open",
-      namesLine: "{bride} & {groom}",
-      dialogLabel: "Wedding invitation from {groom} and {bride}",
-    },
-    hero: {
-      eyebrow: "Together with their families",
-      gratitude: "With Joy & Gratitude to Almighty Allah",
-      request: "request the honour of your presence at their wedding",
-      scrollCue: "Continue",
-    },
-    couple: {
-      eyebrow: "The Couple",
-      title: "Two names, one family",
-      brideRole: "The Bride",
-      groomRole: "The Groom",
-    },
-    saveTheDate: {
-      eyebrow: "Save the date",
-      title: "The day we say yes",
-      labels: { date: "Date", time: "Time", venue: "Venue" },
-    },
-    countdown: {
-      eyebrow: "Counting down",
-      title: "Until we say I do",
-      units: { days: "Days", hours: "Hours", minutes: "Minutes", seconds: "Seconds" },
-      completeLabel: "The day has arrived",
-    },
-    events: {
-      eyebrow: "The Celebrations",
-      title: "You are invited to each moment",
-      progress: "Celebration {current} of {total}",
-      labels: { date: "Date", time: "Time", venue: "Venue", address: "Address" },
-      directions: "Get directions",
-    },
-    gallery: {
-      eyebrow: "Gallery",
-      title: "Cherished moments",
-      openImage: "Open photo",
-      close: "Close",
-      previous: "Previous photo",
-      next: "Next photo",
-      counter: "Photo",
-    },
-    venue: {
-      eyebrow: "Location",
-      title: "Where we will celebrate",
-      labels: { venue: "Venue", address: "Address" },
-      directions: "Open in Google Maps",
-    },
-    contact: {
-      eyebrow: "Contact",
-      title: "Call or message us",
-      call: "Call",
-    },
-    rsvp: {
-      eyebrow: "RSVP",
-      fields: {
-        name: "Your name",
-        attendance: "Will you join us?",
-        guests: "Number of guests",
-        message: "A note for us (optional)",
-        messagePlaceholder: "Share a wish, a memory or a song request…",
-      },
-      submitting: "Sending…",
-      nameError: "Please tell us your name.",
-      successReset: "Send another response",
-    },
+  theme: {
+    bodyBg: "#cec4c0",
+    bodyText: "#2f2222",
+    coverText: "#231f1f",
+    coverSubText: "#2c2626",
+    titleText: "#2f2222",
+    inviteText: "#3f3131",
+    venueText: "#312626",
+    dressText: "#2e2222",
+    panelBg: "rgba(228, 223, 221, 0.4)",
+    panelOverlay: "rgba(255, 255, 255, 0.7)",
+    surface: "rgba(148, 126, 122, 0.7)",
+    footerBg: "rgba(148, 126, 122, 0.7)",
+    dotInactive: "#d2d4d4",
   },
 };
