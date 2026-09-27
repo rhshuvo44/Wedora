@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { weddingData, type WishEntry } from "@/data/wedding";
 import { Icon } from "./Icons";
+import { Divider } from "./Ornaments";
 import Reveal from "./Reveal";
 
 export default function WishesSection() {
@@ -27,51 +28,40 @@ export default function WishesSection() {
 
   return (
     <Reveal>
-      <div className="jm-section">
-        <section className="jm-center">
-          <div style={{ marginTop: "24px" }}>
-            <h5 className="jm-section-title" style={{ marginBottom: "1rem" }}>
-              {wishes.title}
-            </h5>
-            <div id="timeline" style={{ fontSize: "0.8em" }}>
-              {entries.map((entry, i) => (
-                <div key={`${entry.name}-${i}`} className="jm-wish">
-                  <p className="jm-center jm-wish-quote">
-                    <i>{`\u201C${entry.message}\u201D`}</i>
-                    <Icon kind="heart" size={15} className="jm-wish-heart" />
-                  </p>
-                  <b className="jm-center">{entry.name}</b>
-                </div>
-              ))}
-              {hiddenCount > 0 && <p className="jm-wish-more">{wishes.moreLabel}</p>}
-              {local.length > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setLocal([])}
-                  style={{
-                    background: "transparent",
-                    border: 0,
-                    color: weddingData.theme.bodyText,
-                    cursor: "pointer",
-                    font: "inherit",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Reset
-                </button>
-              )}
+      <section className="jm-block jm-block--air">
+        <Divider variant="flower" />
+
+        <h3 className="jm-eyebrow">{wishes.title}</h3>
+
+        <div id="timeline" style={{ marginTop: "1.25rem" }}>
+          {entries.map((entry, i) => (
+            <div key={`${entry.name}-${i}`} className="jm-wish">
+              <p className="jm-wish-quote">
+                {`\u201C${entry.message}\u201D`}
+                <Icon kind="heart" size={13} />
+              </p>
+              <p className="jm-wish-by">{entry.name}</p>
             </div>
-            <div className="jm-wish-actions">
-              <button type="button" className="jm-outline-btn" onClick={() => openPopup("rsvp")}>
-                {wishes.rsvpLabel}
-              </button>
-              <button type="button" className="jm-outline-btn" onClick={() => openPopup("message")}>
-                {wishes.messageLabel}
-              </button>
-            </div>
-          </div>
-        </section>
-      </div>
+          ))}
+
+          {hiddenCount > 0 && <p className="jm-wish-more">{wishes.moreLabel}</p>}
+
+          {local.length > 0 && (
+            <button type="button" className="jm-wish-reset" onClick={() => setLocal([])}>
+              Reset
+            </button>
+          )}
+        </div>
+
+        <div className="jm-btn-row">
+          <button type="button" className="jm-btn" onClick={() => openPopup("rsvp")}>
+            {wishes.rsvpLabel}
+          </button>
+          <button type="button" className="jm-btn" onClick={() => openPopup("message")}>
+            {wishes.messageLabel}
+          </button>
+        </div>
+      </section>
     </Reveal>
   );
 }

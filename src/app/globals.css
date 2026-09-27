@@ -1,46 +1,86 @@
 @import "tailwindcss";
 
-@theme inline {
-  --color-canvas: #cec4c0;
-  --color-ink: #2f2222;
-  --color-ink-soft: #3f3131;
-  --color-ink-deep: #231f1f;
-  --color-ink-mid: #2c2626;
-  --color-ink-venue: #312626;
-  --color-ink-dress: #2e2222;
-  --color-rose: #947e7a;
-  --color-rose-soft: #a4908c;
-  --color-mist: #e4dfdd;
+/* ------------------------------------------------------------------ *
+ * Wedora — printed-stationery design system
+ * The invitation is a narrow card on a calm neutral ground. Paper is
+ * warm cream, line work is dusty rose / mauve / taupe, text is a deep
+ * warm ink. No gradients beyond hairlines, no heavy shadows, no
+ * glassmorphism — only type, whitespace, hairlines and ornaments.
+ * ------------------------------------------------------------------ */
 
-  --font-abhaya: var(--font-abhaya-face), Georgia, serif;
-  --font-ranget: var(--font-ranget-face), Georgia, serif;
-  --font-imperial: var(--font-imperial-face), cursive;
-  --font-blackmango: var(--font-blackmango-face), Georgia, serif;
-  --font-beautique: var(--font-beautique-face), Georgia, serif;
+@theme inline {
+  --color-canvas: #ded5d0;
+  --color-paper: #f7f1ee;
+  --color-paper-deep: #efe6e2;
+  --color-rose: #b79a96;
+  --color-rose-soft: #d8c4c0;
+  --color-mauve: #8a6d68;
+  --color-taupe: #a99a91;
+  --color-ink: #2e2523;
+  --color-ink-soft: #5b4b47;
+
+  --font-script: var(--font-script-face), "Great Vibes", cursive;
+  --font-serif: var(--font-serif-face), "Cormorant Garamond", Georgia, serif;
+  --font-engraved: var(--font-engraved-face), "Cinzel", Georgia, serif;
+  --font-arabic: var(--font-arabic-face), "Amiri", serif;
+}
+
+:root {
+  /* The invitation is always a narrow card — never a full-bleed page. */
+  --card-w: 420px;
 }
 
 @layer base {
-  * {
-    outline: none;
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
+    background-color: var(--color-canvas);
   }
 
   body {
-    background-color: #cec4c0;
-    color: #2f2222;
-    font-family: var(--font-abhaya-face), Georgia, serif;
-    font-size: 14px;
-    line-height: 1.6;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-serif-face), "Cormorant Garamond", Georgia, serif;
+    font-size: 15px;
+    line-height: 1.75;
     margin: 0;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  p {
-    margin-bottom: 0;
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-mauve);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: #e7d6d2;
+    color: var(--color-ink);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -51,332 +91,900 @@
 }
 
 @layer components {
+  /* ---------------------------------------------------------------- *
+   * The card
+   * ---------------------------------------------------------------- */
+
   .jm-shell {
     margin: 0 auto;
-    max-width: 430px;
+    max-width: var(--card-w);
     min-height: 100dvh;
-    overflow: hidden;
     position: relative;
     width: 100%;
   }
 
-  .jm-shell[data-state="closed"] #page-invite,
-  .jm-shell[data-state="opening"] #page-invite {
+  .jm-shell[data-state="closed"] #page-invite {
     display: none;
+  }
+
+  .jm-card {
+    background-color: var(--color-paper);
+    min-height: 100dvh;
+    overflow-x: clip;
+    position: relative;
+    width: 100%;
+  }
+
+  /* Damask ground, barely there. */
+  .jm-card::before {
+    background-image: url("/patterns/lace-pattern.svg");
+    background-size: 320px 320px;
+    content: "";
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+  }
+
+  .jm-card__body {
+    padding-bottom: 5.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (min-width: 460px) {
+    .jm-card {
+      box-shadow:
+        0 0 0 1px rgb(138 109 104 / 0.22),
+        0 34px 70px -44px rgb(46 37 35 / 0.42);
+    }
   }
 
   .jm-center {
     text-align: center;
   }
 
-  .jm-section {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+  /* ---------------------------------------------------------------- *
+   * Section rhythm: ornament · title · content · air · ornament
+   * ---------------------------------------------------------------- */
+
+  .jm-block {
+    padding: 2.5rem 1.5rem;
+    text-align: center;
   }
 
-  .jm-section-title {
-    font-family: var(--font-abhaya-face), Georgia, serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.2;
-    margin-bottom: 0.25rem;
+  .jm-block--air {
+    padding-bottom: 3.25rem;
+    padding-top: 3.25rem;
   }
 
-  .jm-value {
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  .jm-info-field {
-    margin-bottom: 20px;
-  }
-
-  .jm-info-label {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    line-height: 1.2;
-    margin-bottom: 4px;
+  .jm-eyebrow {
+    color: var(--color-mauve);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 10.5px;
+    letter-spacing: 0.32em;
+    line-height: 1.4;
+    text-indent: 0.32em;
     text-transform: uppercase;
   }
 
-  .jm-info-value {
-    font-size: 15px;
-    line-height: 1.6;
+  .jm-label {
+    color: var(--color-mauve);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 9.5px;
+    letter-spacing: 0.3em;
+    line-height: 1.4;
+    text-indent: 0.3em;
+    text-transform: uppercase;
   }
 
-  .jm-ordinal {
-    font-size: 0.75em;
+  .jm-lede {
+    font-size: 17px;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.65;
   }
 
-  .jm-info-cta {
-    margin-top: 28px;
+  .jm-body {
+    font-size: 14.5px;
+    line-height: 1.8;
   }
 
-  .jm-divider {
-    border: 0;
-    border-top: 1px solid rgb(47 34 34 / 0.35);
+  .jm-quiet {
+    color: var(--color-ink-soft);
+  }
+
+  .jm-script {
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-weight: 400;
+  }
+
+  .jm-arabic {
+    font-family: var(--font-arabic-face), "Amiri", serif;
+  }
+
+  .jm-dash {
+    border-top: 1px dotted rgb(138 109 104 / 0.45);
+    height: 0;
+    margin: 1.1rem auto;
+    width: 84px;
+  }
+
+  .jm-hairline {
+    border-top: 1px solid rgb(138 109 104 / 0.28);
+    height: 0;
     margin: 0;
     width: 100%;
   }
 
-  .jm-gallery {
+  /* ---------------------------------------------------------------- *
+   * Ornaments
+   * ---------------------------------------------------------------- */
+
+  .jm-orn {
+    align-items: center;
+    color: rgb(138 109 104 / 0.85);
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin: 1.65rem auto;
+    max-width: 230px;
+  }
+
+  .jm-orn--tight {
+    margin: 1.05rem auto;
+  }
+
+  .jm-orn--wide {
+    max-width: none;
+  }
+
+  .jm-orn__rule {
+    background-image: linear-gradient(90deg, transparent, rgb(138 109 104 / 0.55));
+    flex: 1 1 auto;
+    height: 1px;
+  }
+
+  .jm-orn__rule--flip {
+    background-image: linear-gradient(270deg, transparent, rgb(138 109 104 / 0.55));
+  }
+
+  .jm-orn__mark {
+    display: block;
+    flex: none;
+    height: 20px;
+    width: 20px;
+  }
+
+  .jm-orn--tight .jm-orn__mark {
+    height: 15px;
+    width: 15px;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Cover — printed card face with a delicate oval frame
+   * ---------------------------------------------------------------- */
+
+  .jm-cover-layer {
+    align-items: stretch;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 30;
+  }
+
+  .jm-cover {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 24px 0;
-  }
-
-  .jm-gallery-row {
-    display: flex;
-    gap: 8px;
-  }
-
-  .jm-gallery-photo {
-    aspect-ratio: 1 / 1;
-    display: block;
-    height: auto;
-    object-fit: cover;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: var(--card-w);
+    min-height: 100dvh;
+    overflow: hidden;
+    padding: clamp(4.5rem, 15vh, 8.5rem) 1.5rem clamp(3.5rem, 12vh, 6.5rem);
+    position: relative;
+    text-align: center;
     width: 100%;
   }
 
-  .jm-gallery-row .jm-gallery-photo {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-
-  .jm-gallery-mono {
-    filter: grayscale(1) contrast(1.05);
-  }
-
-  .jm-outline-pill {
-    background: transparent;
-    border: 1px solid #2f2222;
-    border-radius: 999px;
-    color: #2f2222;
-    cursor: pointer;
-    display: inline-block;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.18em;
-    line-height: 1.2;
-    padding: 14px 30px;
-    text-transform: uppercase;
-    transition:
-      background 0.25s ease,
-      color 0.25s ease;
-  }
-
-  .jm-outline-pill:hover {
-    background: #2f2222;
-    color: #cec4c0;
-  }
-
-  .jm-outline-pill:focus-visible {
-    outline: 2px solid #2f2222;
-    outline-offset: 2px;
-  }
-
-  .jm-outline-cta {
-    background: transparent;
-    border: 1px solid #2f2222;
-    border-radius: 999px;
-    color: #2f2222;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    line-height: 1.2;
-    padding: 10px 24px;
-    text-transform: uppercase;
-    transition:
-      background 0.25s ease,
-      color 0.25s ease;
-  }
-
-  .jm-outline-cta:hover {
-    background: #2f2222;
-    color: #cec4c0;
-  }
-
-  .jm-outline-cta:focus-visible {
-    outline: 2px solid #2f2222;
-    outline-offset: 2px;
-  }
-
-  .jm-card-btn {
-    align-items: center;
-    border-radius: 10px;
+  .jm-cover__inner {
     display: flex;
-    height: 40px;
+    flex: 1 1 auto;
+    flex-direction: column;
     justify-content: center;
+    position: relative;
+    z-index: 1;
   }
 
-  .jm-underline-btn {
+  .jm-oval-frame {
+    color: rgb(122 98 94 / 0.9);
+    inset: clamp(0.8rem, 2.4vh, 1.6rem) 0.65rem;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+  }
+
+  .jm-oval {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .jm-cover__type {
+    color: var(--color-ink-soft);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 10.5px;
+    letter-spacing: 0.34em;
+    text-indent: 0.34em;
+    text-transform: uppercase;
+  }
+
+  .jm-cover__names {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .jm-cover__name {
+    color: var(--color-ink);
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: clamp(50px, 16vw, 74px);
+    line-height: 1.08;
+    margin-top: 0.3rem;
+  }
+
+  .jm-cover__amp {
+    color: rgb(138 109 104 / 0.9);
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: 30px;
+    line-height: 1;
+    margin: 0.1rem 0;
+  }
+
+  .jm-cover__date {
+    color: var(--color-ink-soft);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+  }
+
+  .jm-cover__open {
     background: transparent;
     border: 0;
-    border-radius: 8px;
-    border-top: 1px solid #2f2222;
-    color: #2f2222;
+    color: var(--color-ink);
     cursor: pointer;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    margin: 16px 4px;
-    padding: 8px 4px 6px;
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 10.5px;
+    letter-spacing: 0.42em;
+    margin-top: clamp(2rem, 8vh, 4.5rem);
+    padding: 6px 4px 4px;
+    position: relative;
+    text-indent: 0.42em;
+    text-transform: uppercase;
+    transition:
+      color 0.5s ease,
+      letter-spacing 0.6s ease;
   }
+
+  .jm-cover__open::after {
+    background-color: rgb(138 109 104 / 0.45);
+    bottom: 0;
+    content: "";
+    height: 1px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: width 0.6s ease;
+    width: 26px;
+  }
+
+  .jm-cover__open:hover {
+    color: var(--color-mauve);
+  }
+
+  .jm-cover__open:hover::after {
+    width: 52px;
+  }
+
+  .jm-cover__open[data-pending="true"] {
+    color: rgb(138 109 104 / 0.55);
+    pointer-events: none;
+  }
+
+  /* Entrance — CSS so the printed face is never blank before hydration. */
+  .jm-in {
+    animation: jm-in 1s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .jm-in--1 {
+    animation-delay: 0.15s;
+  }
+
+  .jm-in--2 {
+    animation-delay: 0.45s;
+  }
+
+  .jm-in--3 {
+    animation-delay: 0.95s;
+  }
+
+  .jm-in--4 {
+    animation-delay: 1.2s;
+  }
+
+  .jm-in--5 {
+    animation-delay: 1.5s;
+  }
+
+  @keyframes jm-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Sticky header — condensed names + short date
+   * ---------------------------------------------------------------- */
+
+  .jm-head {
+    background-color: rgb(247 241 238 / 0.94);
+    border-bottom: 1px solid rgb(138 109 104 / 0.22);
+    color: var(--color-ink);
+    left: 0;
+    margin-inline: auto;
+    max-width: var(--card-w);
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 25;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  .jm-head__inner {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: space-between;
+    min-height: 42px;
+    overflow: hidden;
+    padding: 0.4rem 1rem;
+  }
+
+  .jm-head__names {
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    line-height: 1.3;
+    min-width: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .jm-head__names span {
+    color: var(--color-rose);
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: 15px;
+    margin: 0 0.1em;
+    text-transform: none;
+  }
+
+  .jm-head__right {
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.65rem;
+  }
+
+  .jm-head__date {
+    color: var(--color-ink-soft);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .jm-head__music {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--color-mauve);
+    cursor: pointer;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    padding: 0;
+    width: 30px;
+  }
+
+  .jm-head__music[data-blocked="true"] {
+    opacity: 0.5;
+  }
+
+  @media (max-width: 359px) {
+    .jm-head__date {
+      display: none;
+    }
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Bottom navigation — the invitation's own footer bar
+   * ---------------------------------------------------------------- */
+
+  .jm-nav {
+    background-color: var(--color-mauve);
+    border-top: 1px solid rgb(247 241 238 / 0.26);
+    bottom: 0;
+    color: var(--color-paper);
+    left: 50%;
+    max-width: var(--card-w);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    position: fixed;
+    transform: translateX(-50%);
+    transition:
+      transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.45s ease,
+      visibility 0.45s;
+    width: 100%;
+    z-index: 20;
+  }
+
+  .jm-nav[data-shown="false"] {
+    opacity: 0;
+    transform: translateX(-50%) translateY(105%);
+    visibility: hidden;
+  }
+
+  .jm-nav__row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .jm-nav__btn {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font: inherit;
+    gap: 0.3rem;
+    padding: 0.7rem 0.25rem 0.65rem;
+    transition: color 0.35s ease;
+  }
+
+  .jm-nav__btn > span {
+    display: inline-flex;
+    opacity: 0.92;
+    transition: opacity 0.35s ease;
+  }
+
+  .jm-nav__btn small {
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    line-height: 1.2;
+    text-indent: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .jm-nav__btn:hover > span {
+    opacity: 1;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Buttons
+   * ---------------------------------------------------------------- */
+
+  .jm-btn {
+    background: transparent;
+    border: 1px solid rgb(138 109 104 / 0.5);
+    border-radius: 2px;
+    color: var(--color-ink);
+    cursor: pointer;
+    display: inline-block;
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    line-height: 1.4;
+    padding: 0.75rem 1.35rem;
+    text-indent: 0.24em;
+    text-transform: uppercase;
+    transition:
+      background-color 0.4s ease,
+      border-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  .jm-btn:hover {
+    background-color: var(--color-mauve);
+    border-color: var(--color-mauve);
+    color: var(--color-paper);
+  }
+
+  .jm-btn--ghost {
+    border-color: transparent;
+    color: var(--color-mauve);
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .jm-btn--ghost:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--color-ink);
+  }
+
+  .jm-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 1.4rem;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Family block — two columns, as printed
+   * ---------------------------------------------------------------- */
+
+  .jm-families {
+    align-items: start;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr 1px 1fr;
+  }
+
+  .jm-families__rule {
+    background-image: linear-gradient(
+      180deg,
+      transparent,
+      rgb(138 109 104 / 0.45) 22%,
+      rgb(138 109 104 / 0.45) 78%,
+      transparent
+    );
+    height: 100%;
+    width: 1px;
+  }
+
+  .jm-families__name {
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    line-height: 1.55;
+  }
+
+  .jm-families__amp {
+    color: var(--color-rose);
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: 15px;
+    line-height: 1.3;
+    margin: 0.1rem 0;
+  }
+
+  .jm-families__joiner {
+    color: var(--color-rose);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    margin-top: 1.1rem;
+    text-transform: uppercase;
+  }
+
+  /* The couple, set in script. */
+  .jm-names {
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: clamp(25px, 8.2vw, 36px);
+    line-height: 1.3;
+    overflow-wrap: break-word;
+  }
+
+  .jm-names__amp {
+    color: var(--color-rose);
+    font-family: var(--font-script-face), "Great Vibes", cursive;
+    font-size: 0.66em;
+    line-height: 1.2;
+    margin: 0.1em 0;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Details — label / value, separated by dotted rules
+   * ---------------------------------------------------------------- */
+
+  .jm-field {
+    margin: 0 auto 1.4rem;
+    max-width: 300px;
+  }
+
+  .jm-field:has(+ .jm-btn-row) {
+    margin-bottom: 0.4rem;
+  }
+
+  .jm-field__value {
+    font-size: 16.5px;
+    letter-spacing: 0.01em;
+    line-height: 1.6;
+  }
+
+  .jm-field__ordinal {
+    font-size: 0.62em;
+    top: -0.5em;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Programme
+   * ---------------------------------------------------------------- */
+
+  .jm-programme {
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  .jm-programme__item {
+    padding: 0.95rem 0;
+  }
+
+  .jm-programme__item + .jm-programme__item {
+    border-top: 1px dotted rgb(138 109 104 / 0.4);
+  }
+
+  .jm-programme__title {
+    font-size: 15.5px;
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+  }
+
+  .jm-programme__time {
+    color: var(--color-mauve);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    margin-top: 0.3rem;
+    text-indent: 0.2em;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Gallery — a photo album, not a portfolio
+   * ---------------------------------------------------------------- */
+
+  .jm-album {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .jm-photo {
+    aspect-ratio: 1 / 1;
+    background-color: var(--color-paper-deep);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .jm-photo img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 1.2s cubic-bezier(0.22, 0.61, 0.36, 1),
+      filter 0.7s ease;
+    width: 100%;
+  }
+
+  .jm-photo--mono img {
+    filter: grayscale(1) contrast(1.06) brightness(1.02);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .jm-photo:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Wishes
+   * ---------------------------------------------------------------- */
 
   .jm-wish {
-    margin-bottom: 1.4rem;
+    margin: 0 auto;
+    max-width: 320px;
+    padding: 1.15rem 0;
   }
 
-  .jm-wish:last-of-type {
-    margin-bottom: 0.5rem;
+  .jm-wish + .jm-wish {
+    border-top: 1px dotted rgb(138 109 104 / 0.4);
   }
 
   .jm-wish-quote {
-    font-size: 1em;
-    line-height: 1.7;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.85;
   }
 
   .jm-wish-quote svg {
     display: inline-block;
-    height: 1.15em;
-    margin-left: 0.4em;
-    opacity: 0.7;
-    transform: translateY(0.12em);
-    width: 1.15em;
+    height: 0.95em;
+    margin-left: 0.35em;
+    opacity: 0.75;
+    transform: translateY(0.1em);
+    width: 0.95em;
   }
 
-  .jm-wish-quote svg.jm-wish-heart {
-    color: #b3261e;
-    opacity: 0.9;
-  }
-
-  .jm-wish b {
-    display: inline-block;
-    margin-top: 4px;
+  .jm-wish-by {
+    color: var(--color-mauve);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    margin-top: 0.5rem;
+    text-indent: 0.22em;
+    text-transform: uppercase;
   }
 
   .jm-wish-more {
-    font-size: 0.85em;
-    font-style: italic;
-    line-height: 1.7;
-    opacity: 0.65;
-  }
-
-  .jm-wish-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 4px;
-  }
-
-  .jm-outline-btn {
-    background: transparent;
-    border: 1px solid #2f2222;
-    border-radius: 10px;
-    color: #2f2222;
-    cursor: pointer;
-    font-family: inherit;
+    color: var(--color-ink-soft);
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    padding: 11px 20px;
-    text-transform: uppercase;
-    transition:
-      background 0.25s ease,
-      color 0.25s ease;
+    font-style: italic;
+    margin-top: 0.75rem;
   }
 
-  .jm-outline-btn:hover {
-    background: #2f2222;
-    color: #cec4c0;
-  }
-
-  .jm-outline-btn:focus-visible {
-    outline: 2px solid #2f2222;
-    outline-offset: 2px;
-  }
-
-  .jm-footer-btn {
-    align-items: center;
-    color: #fff;
+  .jm-wish-reset {
+    background: transparent;
+    border: 0;
+    color: var(--color-ink-soft);
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    font-size: 16.8px;
-    line-height: 1.6;
-    margin: 7.9px 31.5px;
+    font: inherit;
+    font-size: 12px;
+    font-style: italic;
+    margin-top: 0.6rem;
+    opacity: 0.75;
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
-  .jm-footer-btn small {
-    font-size: 9.6px;
-    line-height: 1.6;
-    margin-top: 4.8px;
+  /* ---------------------------------------------------------------- *
+   * Closing
+   * ---------------------------------------------------------------- */
+
+  .jm-closing {
+    padding: 3.5rem 1.5rem 4.5rem;
     text-align: center;
   }
+
+  .jm-closing__mark {
+    color: rgb(138 109 104 / 0.7);
+    display: block;
+    height: 34px;
+    margin: 0 auto;
+    width: 34px;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Popups — a printed slip laid on the card
+   * ---------------------------------------------------------------- */
 
   .jm-popup-layer {
     align-items: center;
     display: flex;
     inset: 0;
     justify-content: center;
-    padding: 16px;
+    padding: 1.25rem;
     position: fixed;
     z-index: 40;
   }
 
+  .jm-popup-scrim {
+    background-color: rgb(46 37 35 / 0.44);
+    inset: 0;
+    position: absolute;
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+
   .jm-popup {
-    border-radius: 15px;
-    box-shadow: 0 0 8px 0 rgb(0 0 0 / 0.5);
-    color: #fff;
-    max-height: 100%;
-    max-width: 412.8px;
+    background-color: var(--color-paper);
+    border: 1px solid rgb(138 109 104 / 0.3);
+    border-radius: 2px;
+    box-shadow: 0 30px 60px -38px rgb(46 37 35 / 0.6);
+    color: var(--color-ink);
+    max-height: min(84dvh, 620px);
     overflow-y: auto;
     overscroll-behavior: contain;
-    padding: 4px;
+    padding: 1.75rem 1.5rem 1.25rem;
     position: relative;
-    width: 100%;
+    width: min(100%, 396px);
   }
 
   .jm-popup-title {
-    font-size: 15px;
-    margin: 16px 0 24px;
+    color: var(--color-mauve);
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 10.5px;
+    letter-spacing: 0.3em;
+    line-height: 1.5;
+    margin-bottom: 1.35rem;
     text-align: center;
+    text-indent: 0.3em;
     text-transform: uppercase;
   }
 
-  .jm-popup-bg {
-    backdrop-filter: blur(10px);
-    background: rgb(148 126 122 / 0.7);
-    cursor: pointer;
-    inset: 0;
-    position: absolute;
+  .jm-popup-foot {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.35rem;
+  }
+
+  .jm-form-label {
+    color: var(--color-ink-soft);
+    display: block;
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    margin-bottom: 0.35rem;
+    text-indent: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .jm-input {
+    background-color: rgb(239 230 226 / 0.6);
+    border: 1px solid rgb(138 109 104 / 0.3);
+    border-radius: 2px;
+    color: var(--color-ink);
+    font-family: var(--font-serif-face), "Cormorant Garamond", Georgia, serif;
+    font-size: 15px;
+    padding: 0.6rem 0.7rem;
+    width: 100%;
+  }
+
+  .jm-input::placeholder {
+    color: rgb(91 75 71 / 0.55);
+    font-style: italic;
+  }
+
+  .jm-input:focus-visible {
+    border-color: var(--color-mauve);
   }
 
   .jm-chip {
     align-items: center;
-    border: 1px solid currentColor;
-    border-radius: 10px;
-    display: flex;
-    gap: 6px;
-    justify-content: center;
-    min-height: 40px;
-    padding: 8px 12px 6px;
-  }
-
-  .jm-pill {
+    border: 1px solid rgb(138 109 104 / 0.45);
     border-radius: 999px;
-    font-size: 13.5px;
-    letter-spacing: 0.02em;
+    color: var(--color-ink-soft);
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    font-size: 14px;
+    gap: 0.4rem;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease;
   }
 
-  .jm-pill svg {
-    flex: none;
+  .jm-chip[aria-pressed="true"],
+  .jm-chip[data-on="true"] {
+    background-color: var(--color-mauve);
+    border-color: var(--color-mauve);
+    color: var(--color-paper);
+  }
+
+  .jm-chip:hover {
+    border-color: var(--color-mauve);
+  }
+
+  .jm-chip[aria-pressed="true"]:hover,
+  .jm-chip[data-on="true"]:hover {
+    background-color: #7a5f5a;
   }
 
   .jm-select-wrap {
@@ -385,301 +993,110 @@
   }
 
   .jm-select-wrap svg {
+    color: var(--color-mauve);
     pointer-events: none;
     position: absolute;
-    right: 12px;
+    right: 0.7rem;
     top: 50%;
     transform: translateY(-50%);
   }
 
   .jm-select {
     appearance: none;
-    padding-right: 34px;
+    padding-right: 2rem;
   }
 
   .jm-select-option {
-    background: #6d5b58;
-    color: #fff;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
+
+  .jm-form-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+  }
+
+  .jm-form-actions .jm-chip {
+    flex: 1;
+  }
+
+  .jm-form-note {
+    color: var(--color-ink-soft);
+    font-size: 13.5px;
+    font-style: italic;
+    margin-top: 0.8rem;
+    text-align: center;
+  }
+
+  .jm-contact-row {
+    align-items: center;
+    border-top: 1px dotted rgb(138 109 104 / 0.4);
+    display: flex;
+    gap: 0.6rem;
+    justify-content: space-between;
+    padding: 0.9rem 0;
+  }
+
+  .jm-contact-row:first-of-type {
+    border-top: 0;
   }
 
   .jm-contact-btn {
     align-items: center;
-    border: 1px solid rgb(255 255 255 / 0.55);
+    border: 1px solid rgb(138 109 104 / 0.4);
     border-radius: 999px;
-    color: #fff;
+    color: var(--color-mauve);
     display: inline-flex;
-    height: 38px;
+    height: 36px;
     justify-content: center;
-    transition: background 0.25s ease;
-    width: 38px;
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease;
+    width: 36px;
   }
 
   .jm-contact-btn:hover {
-    background: rgb(255 255 255 / 0.18);
-  }
-
-  .jm-contact-btn:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-  }
-
-  .jm-music-toggle {
-    align-items: center;
-    background: rgba(148, 126, 122, 0.7);
-    border: 1px solid rgb(255 255 255 / 0.55);
-    border-radius: 999px;
-    backdrop-filter: blur(10px);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    height: 40px;
-    justify-content: center;
-    position: fixed;
-    right: 12px;
-    top: 12px;
-    transition: background 0.25s ease;
-    width: 40px;
-    z-index: 35;
-  }
-
-  .jm-music-toggle:hover {
-    background: rgba(148, 126, 122, 0.9);
-  }
-
-  .jm-music-toggle:focus-visible {
-    outline: 2px solid #fff;
-    outline-offset: 2px;
-  }
-
-  .jm-music-toggle[data-blocked="true"] {
-    opacity: 0.7;
-  }
-
-  .jm-fade-up {
-    opacity: 0;
-    transform: translate3d(0, 24px, 0);
-    transition:
-      opacity 0.7s ease,
-      transform 0.7s ease;
-  }
-
-  .jm-fade-up[data-shown="true"] {
-    opacity: 1;
-    transform: none;
-  }
-
-  .jm-zoom-in {
-    opacity: 0;
-    transform: scale(0.94);
-    transition:
-      opacity 0.7s ease,
-      transform 0.7s ease;
-  }
-
-  .jm-zoom-in[data-shown="true"] {
-    opacity: 1;
-    transform: none;
-  }
-
-  .jm-input {
-    background: rgb(255 255 255 / 0.14);
-    border: 1px solid rgb(255 255 255 / 0.55);
-    border-radius: 8px;
-    color: #fff;
-    font-family: inherit;
-    font-size: 14px;
-    padding: 8px 10px;
-    width: 100%;
-  }
-
-  .jm-input::placeholder {
-    color: rgb(255 255 255 / 0.7);
-  }
-
-  #gateb {
-    height: 100%;
-    inset: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: 30;
-  }
-
-  .jm-gate {
-    height: 100%;
-    position: absolute;
-    top: 0;
-    width: 50%;
-  }
-
-  .jm-gate-left {
-    border-right: 1px solid rgb(0 0 0 / 0.2);
-    left: 0;
-  }
-
-  .jm-gate-right {
-    right: 0;
-  }
-
-  .jm-gate-door {
-    background: #f2f2f2;
-    height: 100%;
-    opacity: 0.2;
-    transition: none;
-    width: 100%;
-  }
-
-  .jm-gate-left.open {
-    left: -50%;
-    transition: left 2s ease;
-  }
-
-  .jm-gate-right.open {
-    right: -50%;
-    transition: right 2s ease;
-  }
-
-  .jm-seal {
-    animation: jm-pulse 2s ease 0s infinite;
-    background: transparent;
-    border: 0;
-    border-radius: 100px;
-    cursor: pointer;
-    height: 150px;
-    padding: 0;
-    position: absolute;
-    right: -75px;
-    top: calc(50% - 75px);
-    width: 150px;
-  }
-
-  .jm-seal-shape {
-    display: block;
-    filter: drop-shadow(3px 3px 8px rgb(0 0 0 / 0.3));
-    height: 100%;
-    left: 0;
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    width: 100%;
-  }
-
-  .jm-seal-inner {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    padding: 1.5rem 0;
-    pointer-events: none;
-    position: relative;
-    width: 100%;
-    z-index: 1;
-  }
-
-  .jm-seal-names {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    min-height: 90px;
-    position: relative;
-    width: 70%;
-  }
-
-  .jm-seal-and {
-    font-size: 31px;
-    left: 50%;
-    line-height: 1.6;
-    opacity: 0.3;
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .jm-seal-name {
-    font-size: 31px;
-    line-height: 1.6;
-    position: relative;
-    text-align: center;
-  }
-
-  .jm-seal-open {
-    font-size: 11px;
-    margin-top: 0.5rem;
-    opacity: 0.5;
-    text-transform: uppercase;
-    transition: opacity 0.3s ease;
-  }
-
-  .jm-seal:hover .jm-seal-open,
-  .jm-seal:focus-visible .jm-seal-open {
-    opacity: 1;
-  }
-
-  .jm-seal:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 4px;
-  }
-
-  .jm-seal.open {
-    animation: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-  }
-}
-
-@keyframes jm-pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(0.95);
-  }
-
-  to {
-    transform: scale(1);
+    background-color: var(--color-mauve);
+    color: var(--color-paper);
   }
 }
 
 @layer utilities {
-  .jm-fh-abhaya {
-    font-family: var(--font-abhaya-face), Georgia, serif;
+  .jm-fh-script {
+    font-family: var(--font-script-face), "Great Vibes", cursive;
   }
 
-  .jm-fh-ranget {
-    font-family: var(--font-ranget-face), Georgia, serif;
+  .jm-fh-serif {
+    font-family: var(--font-serif-face), "Cormorant Garamond", Georgia, serif;
   }
 
-  .jm-fh-imperial {
-    font-family: var(--font-imperial-face), cursive;
+  .jm-fh-engraved {
+    font-family: var(--font-engraved-face), "Cinzel", Georgia, serif;
   }
 
-  .jm-fh-blackmango {
-    font-family: var(--font-blackmango-face), Georgia, serif;
-  }
-
-  .jm-fh-beautique {
-    font-family: var(--font-beautique-face), Georgia, serif;
+  .jm-fh-arabic {
+    font-family: var(--font-arabic-face), "Amiri", serif;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .jm-fade-up,
-  .jm-zoom-in {
+  .jm-in {
+    animation: none;
     opacity: 1;
     transform: none;
+  }
+
+  .jm-photo img {
     transition: none;
   }
 
-  .jm-seal {
-    animation: none;
-  }
-
-  .jm-gate-door,
-  .jm-gate-left.open,
-  .jm-gate-right.open,
-  .jm-seal.open,
-  .jm-seal-open {
+  .jm-cover__open,
+  .jm-cover__open::after,
+  .jm-nav,
+  .jm-chip,
+  .jm-btn,
+  .jm-contact-btn {
     transition: none;
   }
 }

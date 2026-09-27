@@ -1,4 +1,5 @@
 import { weddingData } from "@/data/wedding";
+import { Divider } from "./Ornaments";
 import Reveal from "./Reveal";
 
 export default function CoupleNamesSection() {
@@ -6,10 +7,11 @@ export default function CoupleNamesSection() {
 
   return (
     <Reveal>
-      <section className="jm-fh-ranget jm-center" style={{ fontSize: 29, lineHeight: 1.6 }}>
-        <p>{couple.bride}</p>
-        <p>&amp;</p>
-        <p>{couple.groom}</p>
+      <section className="jm-block">
+        <p className="jm-names">{couple.bride}</p>
+        <p className="jm-names__amp">{couple.joiner}</p>
+        <p className="jm-names">{couple.groom}</p>
+        <Divider variant="flower" />
       </section>
     </Reveal>
   );

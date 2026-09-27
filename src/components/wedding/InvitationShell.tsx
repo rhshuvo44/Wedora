@@ -1,30 +1,35 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { MotionConfig, motion } from "framer-motion";
 import { weddingData } from "@/data/wedding";
+import BackgroundMusic, { useBackgroundMusic } from "./BackgroundMusic";
 import BottomNavBar from "./BottomNavBar";
 import Cover from "./Cover";
+import { DetailsInfoBlock, VenueAddressDetail } from "./DetailSections";
 import GallerySection from "./GallerySection";
 import GreetingSection from "./GreetingSection";
 import CoupleNamesSection from "./CoupleNamesSection";
-import { DetailsInfoBlock, VenueAddressDetail } from "./DetailSections";
+import { SprigMark } from "./Ornaments";
 import Popups, { type PopupId } from "./Popups";
-import OpeningGate from "./OpeningGate";
 import ProgrammeSection from "./ProgrammeSection";
 import Reveal from "./Reveal";
 import SnowCanvas from "./SnowCanvas";
+import StickyHeader from "./StickyHeader";
 import WishesSection from "./WishesSection";
-import BackgroundMusic, { useBackgroundMusic } from "./BackgroundMusic";
 
 type Phase = "closed" | "opening" | "opened";
+
+const EASE = [0.4, 0, 0.2, 1] as const;
 
 export default function InvitationShell() {
   const [phase, setPhase] = useState<Phase>("closed");
   const [popup, setPopup] = useState<PopupId | null>(null);
-  const [navShown, setNavShown] = useState(false);
+  const [chromeShown, setChromeShown] = useState(false);
   const opened = phase === "opened";
   const music = useBackgroundMusic();
 
+  const beginOpening = useCallback(() => setPhase("opening"), []);
   const finishOpening = useCallback(() => setPhase("opened"), []);
 
   const open = useCallback((id: PopupId) => {
@@ -47,7 +52,7 @@ export default function InvitationShell() {
 
   useEffect(() => {
     if (!opened) return;
-    const onScroll = () => setNavShown(window.scrollY > 220);
+    const onScroll = () => setChromeShown(window.scrollY > 220);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -65,64 +70,69 @@ export default function InvitationShell() {
   }, []);
 
   return (
-    <div className="jm-shell" data-state={phase}>
-      <SnowCanvas active={opened} />
+    <MotionConfig reducedMotion="user">
+      <div className="jm-shell" data-state={phase}>
+        <div className="jm-card">
+          <SnowCanvas active={opened} />
 
-      <div
-        className="jm-cover-gate"
-        style={{
-          position: opened ? "absolute" : "relative",
-          inset: 0,
-          zIndex: 30,
-          pointerEvents: opened ? "none" : "auto",
-        }}
-        aria-hidden={opened}
-      >
-        <Cover revealed={opened} />
-        <OpeningGate onOpened={finishOpening} onEngage={music.play} />
-      </div>
+          <motion.main
+            id="page-invite"
+            className="jm-card__body"
+            initial={{ opacity: 0, y: 16 }}
+            animate={phase === "closed" ? { opacity: 0, y: 16 } : { opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: EASE }}
+          >
+            <GreetingSection />
+            <CoupleNamesSection />
+            <DetailsInfoBlock />
+            <ProgrammeSection />
+            <VenueAddressDetail />
+            <GallerySection />
+            <WishesSection />
 
-      <main
-        id="page-invite"
-        style={{
-          color: weddingData.theme.bodyText,
-          marginBottom: 80,
-          paddingTop: opened ? 24 : 0,
-        }}
-      >
-        <div className="jm-center" style={{ paddingTop: 48 }}>
-          <GreetingSection />
-          <CoupleNamesSection />
-          <br />
-          <DetailsInfoBlock />
-          <ProgrammeSection />
-          <VenueAddressDetail />
+            <Reveal>
+              <footer className="jm-closing">
+                <SprigMark />
+                <p className="jm-label" style={{ marginTop: "0.9rem" }}>
+                  {weddingData.cover.invitationType}
+                </p>
+              </footer>
+            </Reveal>
+          </motion.main>
+
+          <StickyHeader
+            shown={opened && chromeShown}
+            musicPlaying={music.playing}
+            musicBlocked={music.blocked}
+            onToggleMusic={music.toggle}
+          />
+
+          <BottomNavBar
+            shown={opened && chromeShown}
+            onOpen={open}
+            musicPlaying={music.playing}
+            onToggleMusic={music.toggle}
+          />
+
+          <BackgroundMusic audioRef={music.audioRef} />
+
+          {opened && popup && <Popups open={popup} onClose={close} onWish={onWish} />}
         </div>
 
-        <GallerySection />
-        <WishesSection />
-
-        <Reveal>
-          <div className="jm-center" style={{ margin: "16px 0", padding: "16px 0" }} />
-        </Reveal>
-      </main>
-
-      <BottomNavBar
-        shown={opened && navShown}
-        onOpen={open}
-        musicPlaying={music.playing}
-        onToggleMusic={music.toggle}
-      />
-
-      <BackgroundMusic
-        audioRef={music.audioRef}
-        playing={music.playing}
-        blocked={music.blocked}
-        onToggle={music.toggle}
-        showToggle={opened}
-      />
-
-      {opened && popup && <Popups open={popup} onClose={close} onWish={onWish} />}
-    </div>
+        {phase !== "opened" && (
+          <motion.div
+            className="jm-cover-layer"
+            initial={{ opacity: 1, scale: 1 }}
+            animate={phase === "opening" ? { opacity: 0, scale: 1.04 } : { opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: EASE }}
+            onAnimationComplete={() => {
+              if (phase === "opening") finishOpening();
+            }}
+          >
+            <Cover onEngage={music.play} onBegin={beginOpening} />
+          </motion.div>
+        )}
+      </div>
+    </MotionConfig>
   );
 }

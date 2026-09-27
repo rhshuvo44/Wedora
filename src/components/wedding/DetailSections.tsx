@@ -1,39 +1,48 @@
 import type { ReactNode } from "react";
 import { weddingData } from "@/data/wedding";
 import CalendarSection from "./CalendarSection";
+import { Divider } from "./Ornaments";
 import Reveal from "./Reveal";
 
-function InfoField({ label, value, color }: { label: string; value: ReactNode; color?: string }) {
+function InfoField({ label, value }: { label: string; value: ReactNode }) {
   return (
-    <div className="jm-info-field">
-      <h5 className="jm-info-label" style={color ? { color } : undefined}>
-        {label}
-      </h5>
-      <p className="jm-center jm-info-value">{value}</p>
+    <div className="jm-field">
+      <h3 className="jm-label">{label}</h3>
+      <p className="jm-field__value">{value}</p>
     </div>
   );
 }
 
 export function DetailsInfoBlock() {
-  const { details, dressCode, theme } = weddingData;
+  const { details, dressCode } = weddingData;
   const { lead, day, ordinal, tail } = details.date;
 
   return (
     <Reveal>
-      <section className="jm-section jm-center" style={{ paddingTop: 40, paddingBottom: 8 }}>
-        <InfoField label={details.venue.label} value={details.venue.value} color={theme.venueText} />
+      <section className="jm-block jm-block--air">
+        <InfoField label={details.venue.label} value={details.venue.value} />
+
+        <div className="jm-dash" aria-hidden="true" />
+
         <InfoField
           label={details.date.label}
           value={
             <>
               {lead} {day}
-              <sup className="jm-ordinal">{ordinal}</sup> {tail}
+              <sup className="jm-field__ordinal">{ordinal}</sup> {tail}
             </>
           }
         />
+
+        <div className="jm-dash" aria-hidden="true" />
+
         <InfoField label={details.time.label} value={details.time.value} />
-        <InfoField label={dressCode.label} value={dressCode.value} color={theme.dressText} />
-        <div className="jm-info-cta">
+
+        <div className="jm-dash" aria-hidden="true" />
+
+        <InfoField label={dressCode.label} value={dressCode.value} />
+
+        <div className="jm-btn-row">
           <CalendarSection />
         </div>
       </section>
@@ -42,20 +51,23 @@ export function DetailsInfoBlock() {
 }
 
 export function VenueAddressDetail() {
-  const { venue, theme } = weddingData;
+  const { venue } = weddingData;
+
   return (
     <Reveal>
-      <section className="jm-section jm-center" style={{ paddingTop: 40, paddingBottom: 40, margin: "24px 0" }}>
-        <h5 className="jm-section-title" style={{ color: theme.titleText }}>
-          {venue.label}
-        </h5>
-        <hr className="jm-divider" style={{ margin: "18px 0" }} />
-        <p className="jm-value" style={{ color: theme.venueText }}>
+      <section className="jm-block jm-block--air">
+        <Divider variant="flower" />
+
+        <h3 className="jm-eyebrow">{venue.label}</h3>
+
+        <p className="jm-lede" style={{ marginTop: "0.9rem" }}>
           {venue.address}
         </p>
-        <hr className="jm-divider" style={{ margin: "18px 0" }} />
-        <p className="jm-center" style={{ marginTop: "28px" }}>
-          <strong>{venue.note}</strong>
+
+        <Divider variant="diamond" tight />
+
+        <p className="jm-body" style={{ fontStyle: "italic" }}>
+          {venue.note}
         </p>
       </section>
     </Reveal>

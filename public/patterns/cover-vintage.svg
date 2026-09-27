@@ -1,91 +1,92 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 932" preserveAspectRatio="xMidYMid slice" width="430" height="932">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 932" preserveAspectRatio="xMidYMid slice" width="420" height="932">
+  <title>Cover ground — warm damask</title>
+  <desc>Original damask ground drawn for this invitation: warm cream paper, half-drop palmette tile in dusty rose, a soft central wash that keeps the names clear, and faint taupe sprigs top and bottom.</desc>
   <defs>
     <linearGradient id="cvBase" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#d3cac6"/>
-      <stop offset="0.5" stop-color="#cfc4c0"/>
-      <stop offset="1" stop-color="#c8bcb8"/>
+      <stop offset="0" stop-color="#f9f4f1"/>
+      <stop offset="0.45" stop-color="#f4ebe6"/>
+      <stop offset="1" stop-color="#efe2dc"/>
     </linearGradient>
-    <radialGradient id="cvGlow" cx="0.5" cy="0.42" r="0.75">
-      <stop offset="0" stop-color="#e6dedb" stop-opacity="0.85"/>
-      <stop offset="0.6" stop-color="#cfc4c0" stop-opacity="0"/>
+    <radialGradient id="cvWash" cx="0.5" cy="0.46" r="0.62">
+      <stop offset="0" stop-color="#fdfaf8" stop-opacity="0.92"/>
+      <stop offset="0.55" stop-color="#faf4f1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#f7f0ec" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="cvEdge" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#b7a7a2" stop-opacity="0.55"/>
-      <stop offset="0.14" stop-color="#b7a7a2" stop-opacity="0"/>
-      <stop offset="0.86" stop-color="#b7a7a2" stop-opacity="0"/>
-      <stop offset="1" stop-color="#b7a7a2" stop-opacity="0.55"/>
+      <stop offset="0" stop-color="#b79a96" stop-opacity="0.22"/>
+      <stop offset="0.12" stop-color="#b79a96" stop-opacity="0"/>
+      <stop offset="0.88" stop-color="#b79a96" stop-opacity="0"/>
+      <stop offset="1" stop-color="#b79a96" stop-opacity="0.22"/>
     </linearGradient>
-    <g id="cvLeaf">
-      <path d="M0 0 C 9 -3 16 -10 18 -19 C 9 -18 2 -11 0 0 Z"/>
+
+    <!-- half-drop palmette, the same motif the card ground uses -->
+    <g id="cvPalmette" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 0C7-22 7-44 0-62C-7-44-7-22 0 0Z"/>
+      <g transform="rotate(32)">
+        <path d="M0 0C5.5-19 5.5-38 0-54C-5.5-38-5.5-19 0 0Z"/>
+      </g>
+      <g transform="rotate(-32)">
+        <path d="M0 0C5.5-19 5.5-38 0-54C-5.5-38-5.5-19 0 0Z"/>
+      </g>
+      <g transform="rotate(62)">
+        <path d="M0 0C4.5-15 4.5-30 0-43C-4.5-30-4.5-15 0 0Z"/>
+      </g>
+      <g transform="rotate(-62)">
+        <path d="M0 0C4.5-15 4.5-30 0-43C-4.5-30-4.5-15 0 0Z"/>
+      </g>
+      <path d="M0-6V-40" stroke-width="0.8"/>
+      <circle cx="0" cy="-46" r="2.4" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="-20" r="9" stroke-width="0.7" stroke-dasharray="1 3.2"/>
+      <circle cx="0" cy="-20" r="3.4" stroke-width="0.8"/>
+      <path d="M0-2C15-8 25-22 21-35C18-45 8-48 3.5-42"/>
+      <path d="M0-2C-15-8-25-22-21-35C-18-45-8-48-3.5-42"/>
+      <path d="M21-35C26.5-38.5 31-34 28.6-29.2C26.6-25 21.4-26 19.8-29.6C18.9-31.8 19.6-33.7 21-35Z"/>
+      <path d="M-21-35C-26.5-38.5-31-34-28.6-29.2C-26.6-25-21.4-26-19.8-29.6C-18.9-31.8-19.6-33.7-21-35Z"/>
+      <path d="M-14 4C-10-4-4-4 0 2C4-4 10-4 14 4"/>
+      <path d="M-9 8.5C-6 2.5 6 2.5 9 8.5"/>
+      <circle cx="0" cy="-52" r="1.1" fill="currentColor" stroke="none"/>
+      <circle cx="0" cy="12" r="1.1" fill="currentColor" stroke="none"/>
     </g>
-    <g id="cvSprig">
-      <path d="M0 0 C 30 -6 60 -4 92 6" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-      <use href="#cvLeaf" transform="translate(16 -3) rotate(-38) scale(0.85)"/>
-      <use href="#cvLeaf" transform="translate(34 -4) rotate(-16) scale(0.8)"/>
-      <use href="#cvLeaf" transform="translate(54 -2) rotate(22) scale(0.78)"/>
-      <use href="#cvLeaf" transform="translate(72 2) rotate(52) scale(0.7)"/>
-      <circle cx="46" cy="-6" r="2.1"/>
-      <circle cx="88" cy="5" r="1.5"/>
-    </g>
-    <g id="cvCorner">
-      <path d="M0 46 C 0 20 20 0 46 0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M0 58 C 0 26 26 0 58 0" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" opacity="0.7"/>
-      <use href="#cvLeaf" transform="translate(9 40) rotate(-52) scale(0.62)"/>
-      <use href="#cvLeaf" transform="translate(40 9) rotate(-14) scale(0.62)"/>
-      <circle cx="7" cy="7" r="2.4"/>
-      <circle cx="20" cy="6" r="1.3"/>
-      <circle cx="6" cy="20" r="1.3"/>
-    </g>
-    <g id="cvMedallion">
-      <circle r="26" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.55"/>
-      <circle r="21" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
-      <use href="#cvSprig" transform="rotate(0)"/>
-      <use href="#cvSprig" transform="rotate(120)"/>
-      <use href="#cvSprig" transform="rotate(240)"/>
+
+    <pattern id="cvDamask" width="150" height="208" patternUnits="userSpaceOnUse">
+      <g color="#b79a96">
+        <use href="#cvPalmette" transform="translate(75 104) scale(0.92)"/>
+        <g opacity="0.62">
+          <use href="#cvPalmette" transform="translate(0 0) scale(0.4)"/>
+          <use href="#cvPalmette" transform="translate(150 0) scale(0.4)"/>
+          <use href="#cvPalmette" transform="translate(0 208) scale(0.4)"/>
+          <use href="#cvPalmette" transform="translate(150 208) scale(0.4)"/>
+        </g>
+      </g>
+    </pattern>
+
+    <g id="cvSprig" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
+      <path d="M0 0C24-5 48-4 74 4"/>
+      <path d="M12-2C17-8 24-8 28-3"/>
+      <path d="M30-3C35-9 42-9 46-4"/>
+      <path d="M48-2C53-8 60-8 64-3"/>
+      <circle cx="70" cy="3" r="1.6" fill="currentColor" stroke="none"/>
     </g>
   </defs>
 
-  <rect width="430" height="932" fill="url(#cvBase)"/>
-  <rect width="430" height="932" fill="url(#cvGlow)"/>
-  <rect width="430" height="932" fill="url(#cvEdge)"/>
+  <rect width="420" height="932" fill="url(#cvBase)"/>
+  <rect width="420" height="932" fill="url(#cvDamask)" opacity="0.17"/>
+  <rect width="420" height="932" fill="url(#cvWash)"/>
+  <rect width="420" height="932" fill="url(#cvEdge)"/>
 
-  <g color="#8d7b77">
-    <rect x="21" y="21" width="388" height="890" fill="none" stroke="currentColor" stroke-width="1.1" opacity="0.75"/>
-    <rect x="28" y="28" width="374" height="876" fill="none" stroke="currentColor" stroke-width="0.55" opacity="0.55"/>
+  <g color="#8a6d68" opacity="0.2">
+    <use href="#cvSprig" transform="translate(173 74) scale(-1 1)"/>
+    <use href="#cvSprig" transform="translate(247 74)"/>
+    <use href="#cvSprig" transform="translate(173 858) scale(-1 -1)"/>
+    <use href="#cvSprig" transform="translate(247 858) scale(1 -1)"/>
   </g>
 
-  <g color="#94817d">
-    <use href="#cvCorner" transform="translate(30 30)"/>
-    <use href="#cvCorner" transform="translate(400 30) scale(-1 1)"/>
-    <use href="#cvCorner" transform="translate(30 902) scale(1 -1)"/>
-    <use href="#cvCorner" transform="translate(400 902) scale(-1 -1)"/>
-  </g>
-
-  <g color="#8a7672" opacity="0.85">
-    <use href="#cvSprig" transform="translate(215 96) scale(-1 1) translate(-92 0)"/>
-    <use href="#cvSprig" transform="translate(215 96)"/>
-    <use href="#cvSprig" transform="translate(215 836) scale(-1 1) translate(-92 0)"/>
-    <use href="#cvSprig" transform="translate(215 836) scale(-1 -1)"/>
-  </g>
-
-  <g color="#7f6d69" opacity="0.7">
-    <use href="#cvMedallion" transform="translate(215 466) scale(0.42)" opacity="0.16"/>
-  </g>
-
-  <g color="#8a7672" opacity="0.5">
-    <path d="M120 466 H 176" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"/>
-    <path d="M254 466 H 310" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round"/>
-    <path d="M215 458 L 219 466 L 215 474 L 211 466 Z"/>
-    <path d="M186 466 C 194 458 202 458 210 466 C 202 474 194 474 186 466 Z"/>
-    <path d="M244 466 C 236 458 228 458 220 466 C 228 474 236 474 244 466 Z"/>
-  </g>
-
-  <g color="#9c8a86" opacity="0.45">
-    <circle cx="70" cy="300" r="1.6"/>
-    <circle cx="360" cy="300" r="1.6"/>
-    <circle cx="70" cy="632" r="1.6"/>
-    <circle cx="360" cy="632" r="1.6"/>
-    <circle cx="215" cy="180" r="1.3"/>
-    <circle cx="215" cy="752" r="1.3"/>
+  <g color="#a99a91" opacity="0.4">
+    <circle cx="96" cy="300" r="1.5"/>
+    <circle cx="324" cy="300" r="1.5"/>
+    <circle cx="96" cy="632" r="1.5"/>
+    <circle cx="324" cy="632" r="1.5"/>
+    <circle cx="210" cy="176" r="1.2"/>
+    <circle cx="210" cy="756" r="1.2"/>
   </g>
 </svg>

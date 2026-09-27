@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { motion } from "framer-motion";
 import { weddingData } from "@/data/wedding";
 import { buildGoogleUrl, buildIcs } from "./CalendarSection";
 import { Icon } from "./Icons";
+import { Divider } from "./Ornaments";
 
 export type PopupId = "calendar" | "contact" | "location" | "message" | "rsvp";
+
+const EASE = [0.22, 0.61, 0.36, 1] as const;
 
 function Shell({ id, title, onClose, children }: { id: PopupId; title: string; onClose: () => void; children: ReactNode }) {
   useEffect(() => {
@@ -23,25 +27,24 @@ function Shell({ id, title, onClose, children }: { id: PopupId; title: string; o
 
   return (
     <div id={`popup-${id}`} role="dialog" aria-modal="true" aria-label={title} className="jm-popup-layer">
-      <div className="jm-popup-bg" aria-hidden="true" onClick={onClose} />
-      <div className="jm-popup" style={{ background: weddingData.theme.surface }}>
+      <div className="jm-popup-scrim" aria-hidden="true" onClick={onClose} />
+      <motion.div
+        className="jm-popup"
+        initial={{ opacity: 0, scale: 0.985, y: 8 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: EASE }}
+      >
         <p className="jm-popup-title">{title}</p>
         {children}
-        <div style={{ display: "flex", justifyContent: "center", paddingBottom: 8 }}>
-          <button
-            type="button"
-            className="jm-chip"
-            onClick={onClose}
-            style={{ background: "transparent", color: "#fff", cursor: "pointer" }}
-          >
+        <div className="jm-popup-foot">
+          <button type="button" className="jm-btn jm-btn--ghost" onClick={onClose}>
             Close
           </button>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
-
 
 function RsvpForm({
   onDone,
@@ -73,43 +76,33 @@ function RsvpForm({
   };
 
   return (
-    <form onSubmit={submit} style={{ padding: "0 12px 8px" }}>
-      <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
+    <form onSubmit={submit}>
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.15rem" }}>
         <button
           type="button"
-          className="jm-chip jm-pill"
+          className="jm-chip"
           aria-pressed={attending === "yes"}
           onClick={() => setAttending("yes")}
-          style={{
-            flex: 1,
-            cursor: "pointer",
-            background: attending === "yes" ? "rgba(255,255,255,0.92)" : "transparent",
-            color: attending === "yes" ? "#947e7a" : "#fff",
-          }}
+          style={{ flex: 1 }}
         >
-          <Icon kind="check" size={16} />
+          <Icon kind="check" size={15} />
           <span>{rsvp.attendingLabel}</span>
         </button>
         <button
           type="button"
-          className="jm-chip jm-pill"
+          className="jm-chip"
           aria-pressed={attending === "no"}
           onClick={() => setAttending("no")}
-          style={{
-            flex: 1,
-            cursor: "pointer",
-            background: attending === "no" ? "rgba(255,255,255,0.92)" : "transparent",
-            color: attending === "no" ? "#947e7a" : "#fff",
-          }}
+          style={{ flex: 1 }}
         >
-          <Icon kind="close" size={16} />
+          <Icon kind="close" size={15} />
           <span>{rsvp.decliningLabel}</span>
         </button>
       </div>
 
       {attending === "yes" && (
         <>
-          <label htmlFor="jm-rsvp-name" style={{ display: "block", fontSize: 12, marginBottom: 4 }}>
+          <label className="jm-form-label" htmlFor="jm-rsvp-name">
             {rsvp.nameLabel}
           </label>
           <input
@@ -117,13 +110,13 @@ function RsvpForm({
             className="jm-input"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            style={{ marginBottom: 12 }}
+            style={{ marginBottom: "0.85rem" }}
           />
 
-          <label htmlFor="jm-rsvp-guests" style={{ display: "block", fontSize: 12, marginBottom: 4 }}>
+          <label className="jm-form-label" htmlFor="jm-rsvp-guests">
             {rsvp.guestsLabel}
           </label>
-          <span className="jm-select-wrap" style={{ marginBottom: 12 }}>
+          <span className="jm-select-wrap" style={{ display: "block", marginBottom: "0.85rem" }}>
             <select
               id="jm-rsvp-guests"
               className="jm-input jm-select"
@@ -136,10 +129,10 @@ function RsvpForm({
                 </option>
               ))}
             </select>
-            <Icon kind="chevron" size={18} />
+            <Icon kind="chevron" size={16} />
           </span>
 
-          <label htmlFor="jm-rsvp-note" style={{ display: "block", fontSize: 12, marginBottom: 4 }}>
+          <label className="jm-form-label" htmlFor="jm-rsvp-note">
             {rsvp.noteLabel}
           </label>
           <textarea
@@ -154,30 +147,21 @@ function RsvpForm({
       )}
 
       {error && (
-        <p role="alert" style={{ fontSize: 12, marginTop: 8 }}>
+        <p role="alert" className="jm-form-note" style={{ color: "#8a4a44", fontStyle: "normal" }}>
           {error}
         </p>
       )}
 
-      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <button
-          type="button"
-          className="jm-chip"
-          onClick={onCancel}
-          style={{ flex: 1, cursor: "pointer", background: "transparent", color: "#fff" }}
-        >
+      <div className="jm-form-actions">
+        <button type="button" className="jm-chip" onClick={onCancel} style={{ flex: 1 }}>
           {rsvp.cancelLabel}
         </button>
-        <button
-          type="submit"
-          className="jm-chip"
-          style={{ flex: 1, cursor: "pointer", background: "rgba(255,255,255,0.92)", color: "#947e7a" }}
-        >
+        <button type="submit" className="jm-chip" data-on="true" style={{ flex: 1 }}>
           {sent ? "Sent" : rsvp.submitLabel}
         </button>
       </div>
       {sent && (
-        <p style={{ fontSize: 12, marginTop: 8, textAlign: "center" }}>
+        <p className="jm-form-note">
           {attending === "yes" ? rsvp.successMessage : rsvp.declineMessage}
         </p>
       )}
@@ -220,8 +204,8 @@ function MessageForm({
   };
 
   return (
-    <form onSubmit={submit} style={{ padding: "0 12px 8px" }}>
-      <label htmlFor="jm-message-name" style={{ display: "block", fontSize: 12, marginBottom: 4 }}>
+    <form onSubmit={submit}>
+      <label className="jm-form-label" htmlFor="jm-message-name">
         {message.nameLabel}
       </label>
       <input
@@ -230,10 +214,10 @@ function MessageForm({
         className="jm-input"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: "0.85rem" }}
       />
 
-      <label htmlFor="jm-message-body" style={{ display: "block", fontSize: 12, marginBottom: 4 }}>
+      <label className="jm-form-label" htmlFor="jm-message-body">
         {message.messageLabel}
       </label>
       <textarea
@@ -246,31 +230,20 @@ function MessageForm({
       />
 
       {error && (
-        <p role="alert" style={{ fontSize: 12, marginTop: 8 }}>
+        <p role="alert" className="jm-form-note" style={{ color: "#8a4a44", fontStyle: "normal" }}>
           {error}
         </p>
       )}
 
-      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <button
-          type="button"
-          className="jm-chip"
-          onClick={onCancel}
-          style={{ flex: 1, cursor: "pointer", background: "transparent", color: "#fff" }}
-        >
+      <div className="jm-form-actions">
+        <button type="button" className="jm-chip" onClick={onCancel} style={{ flex: 1 }}>
           {"Cancel"}
         </button>
-        <button
-          type="submit"
-          className="jm-chip"
-          style={{ flex: 1, cursor: "pointer", background: "rgba(255,255,255,0.92)", color: "#947e7a" }}
-        >
+        <button type="submit" className="jm-chip" data-on="true" style={{ flex: 1 }}>
           {sent ? "Sent" : message.submitLabel}
         </button>
       </div>
-      {sent && (
-        <p style={{ fontSize: 12, marginTop: 8, textAlign: "center" }}>{message.successMessage}</p>
-      )}
+      {sent && <p className="jm-form-note">{message.successMessage}</p>}
     </form>
   );
 }
@@ -292,11 +265,11 @@ export default function Popups({
     return (
       <Shell id="calendar" title="Calendar" onClose={onClose}>
         <div className="jm-center">
-          <p style={{ fontSize: 16 }}>{calendar.date}</p>
-          <p style={{ fontSize: 12.8, marginBottom: 24 }}>{calendar.time}</p>
+          <p className="jm-lede">{calendar.date}</p>
+          <p className="jm-body jm-quiet">{calendar.time}</p>
         </div>
-        <div style={{ display: "flex", gap: 8, padding: "0 12px 12px" }}>
-          <a className="jm-chip" href={buildIcs()} download="tasnia-rajib-nikkah.ics" style={{ flex: 1, textDecoration: "none" }}>
+        <div style={{ display: "flex", gap: "0.5rem", marginTop: "1.1rem" }}>
+          <a className="jm-chip" href={buildIcs()} download="tasnia-rajib-nikkah.ics" style={{ flex: 1 }}>
             <Icon kind="apple" />
             <span>{calendar.appleLabel}</span>
           </a>
@@ -305,7 +278,7 @@ export default function Popups({
             href={buildGoogleUrl()}
             target="_blank"
             rel="noreferrer"
-            style={{ flex: 1, textDecoration: "none" }}
+            style={{ flex: 1 }}
           >
             <Icon kind="google" />
             <span>{calendar.googleLabel}</span>
@@ -318,29 +291,29 @@ export default function Popups({
   if (open === "contact") {
     return (
       <Shell id="contact" title="Contact" onClose={onClose}>
-        <div style={{ padding: "0 12px" }}>
+        <div>
           {contacts.map((c) => (
-            <div key={c.phone} style={{ display: "flex", alignItems: "center", marginBottom: 16, gap: 8 }}>
-              <div style={{ flex: 1, paddingLeft: 8 }}>
-                <p>
-                  <strong>{c.name}</strong>
+            <div key={c.phone} className="jm-contact-row">
+              <div>
+                <p style={{ fontSize: "15.5px", lineHeight: 1.4 }}>{c.name}</p>
+                <p className="jm-label" style={{ marginTop: "0.2rem", opacity: 0.8 }}>
+                  {c.role}
                 </p>
-                <small style={{ opacity: 0.7, fontSize: 11.5 }}>
-                  <i>{c.role}</i>
-                </small>
               </div>
-              <a href={`tel:${c.phone}`} aria-label={`Call ${c.name}`} className="jm-contact-btn">
-                <Icon kind="phone" />
-              </a>
-              <a
-                href={`https://wa.me/${c.whatsapp}`}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Message ${c.name}`}
-                className="jm-contact-btn"
-              >
-                <Icon kind="whatsapp" />
-              </a>
+              <div style={{ display: "flex", gap: "0.45rem" }}>
+                <a href={`tel:${c.phone}`} aria-label={`Call ${c.name}`} className="jm-contact-btn">
+                  <Icon kind="phone" size={16} />
+                </a>
+                <a
+                  href={`https://wa.me/${c.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`Message ${c.name}`}
+                  className="jm-contact-btn"
+                >
+                  <Icon kind="whatsapp" size={16} />
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -351,20 +324,25 @@ export default function Popups({
   if (open === "location") {
     return (
       <Shell id="location" title="Location" onClose={onClose}>
-        <div className="jm-center" style={{ padding: "0 12px" }}>
-          <p id="address" style={{ fontSize: 15, color: weddingData.theme.venueText }}>
+        <div className="jm-center">
+          <p id="address" className="jm-lede">
             {details.venue.value}
           </p>
-          <p style={{ fontSize: 13, opacity: 0.85 }}>{venue.address}</p>
+          <p className="jm-body jm-quiet" style={{ marginTop: "0.4rem" }}>
+            {venue.address}
+          </p>
+          <Divider variant="diamond" tight />
           <a
-            className="jm-chip"
+            className="jm-btn"
             href={venue.mapUrl}
             target="_blank"
             rel="noreferrer"
-            style={{ margin: "12px auto 0", width: "fit-content", textDecoration: "none" }}
+            style={{ textDecoration: "none" }}
           >
-            <Icon kind="map" />
-            <span>Maps</span>
+            <span style={{ alignItems: "center", display: "inline-flex", gap: "0.5rem" }}>
+              <Icon kind="map" size={15} />
+              <span>Maps</span>
+            </span>
           </a>
         </div>
       </Shell>

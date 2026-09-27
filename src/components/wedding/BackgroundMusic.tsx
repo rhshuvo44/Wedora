@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { weddingData } from "@/data/wedding";
-import { Icon } from "./Icons";
 
 const FADE_STEPS = 20;
 const FADE_MS = 40;
@@ -84,36 +83,10 @@ export function useBackgroundMusic() {
 
 export default function BackgroundMusic({
   audioRef,
-  playing,
-  blocked,
-  onToggle,
-  showToggle,
 }: {
   audioRef: React.RefObject<HTMLAudioElement | null>;
-  playing: boolean;
-  blocked: boolean;
-  onToggle: () => void;
-  showToggle: boolean;
 }) {
   const { song } = weddingData;
-  const label = playing ? song.pauseLabel : song.playLabel;
 
-  return (
-    <>
-      <audio ref={audioRef} src={song.src} loop preload="auto" />
-      {showToggle && (
-        <button
-          type="button"
-          className="jm-music-toggle"
-          onClick={onToggle}
-          aria-pressed={playing}
-          aria-label={label}
-          title={label}
-          data-blocked={blocked}
-        >
-          <Icon kind={playing ? "volume" : "muted"} size={20} />
-        </button>
-      )}
-    </>
-  );
+  return <audio ref={audioRef} src={song.src} loop preload="auto" />;
 }

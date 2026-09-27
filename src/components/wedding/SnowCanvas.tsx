@@ -40,14 +40,14 @@ export default function SnowCanvas({ active = true }: { active?: boolean }) {
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(18, Math.round((width * height) / 26000));
+      const count = Math.max(14, Math.round((width * height) / 32000));
       flakes = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: 0.7 + Math.random() * 1.7,
-        vy: 0.12 + Math.random() * 0.34,
-        vx: (Math.random() - 0.5) * 0.16,
-        a: 0.12 + Math.random() * 0.3,
+        r: 0.6 + Math.random() * 1.5,
+        vy: 0.1 + Math.random() * 0.28,
+        vx: (Math.random() - 0.5) * 0.14,
+        a: 0.1 + Math.random() * 0.22,
       }));
     };
 
@@ -63,7 +63,7 @@ export default function SnowCanvas({ active = true }: { active?: boolean }) {
         if (f.x < -4) f.x = width + 4;
         if (f.x > width + 4) f.x = -4;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255, 255, 255, ${f.a})`;
+        ctx.fillStyle = `rgba(183, 154, 150, ${f.a})`;
         ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
         ctx.fill();
       }
@@ -92,7 +92,7 @@ export default function SnowCanvas({ active = true }: { active?: boolean }) {
         maxWidth: 430,
         height: "100%",
         pointerEvents: "none",
-        zIndex: 5,
+        zIndex: 0,
       }}
     >
       <canvas ref={canvasRef} style={{ display: "block" }} />

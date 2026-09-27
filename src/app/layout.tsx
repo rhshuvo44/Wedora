@@ -1,40 +1,34 @@
 import type { Metadata, Viewport } from "next";
-import { Abhaya_Libre, Caveat, Gilda_Display, Imperial_Script, Raleway } from "next/font/google";
+import { Amiri, Cinzel, Cormorant_Garamond, Great_Vibes } from "next/font/google";
 import { weddingData } from "@/data/wedding";
 import "./globals.css";
 
-const fontAbhaya = Abhaya_Libre({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-abhaya-face",
-  display: "swap",
-});
-
-const fontGilda = Gilda_Display({
+const fontScript = Great_Vibes({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-ranget-face",
+  variable: "--font-script-face",
   display: "swap",
 });
 
-const fontImperial = Imperial_Script({
+const fontSerif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif-face",
+  display: "swap",
+});
+
+const fontEngraved = Cinzel({
   subsets: ["latin"],
   weight: "400",
-  variable: "--font-imperial-face",
+  variable: "--font-engraved-face",
   display: "swap",
 });
 
-const fontCaveat = Caveat({
-  subsets: ["latin"],
-  weight: ["500", "600"],
-  variable: "--font-blackmango-face",
-  display: "swap",
-});
-
-const fontRaleway = Raleway({
-  subsets: ["latin"],
-  weight: ["300", "400"],
-  variable: "--font-beautique-face",
+const fontArabic = Amiri({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
+  variable: "--font-arabic-face",
   display: "swap",
 });
 
@@ -83,7 +77,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: weddingData.theme.bodyBg,
+  themeColor: "#F7F1EE",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -91,11 +85,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html
       lang="en"
       dir="ltr"
-      className={`${fontAbhaya.variable} ${fontGilda.variable} ${fontImperial.variable} ${fontCaveat.variable} ${fontRaleway.variable}`}
+      className={`${fontScript.variable} ${fontSerif.variable} ${fontEngraved.variable} ${fontArabic.variable}`}
     >
       <head>
         <noscript>
-          <style>{`.jm-shell[data-state="closed"] #page-invite,.jm-shell[data-state="opening"] #page-invite{display:block !important}.jm-shell:not([data-state="opened"]) #footer{display:none !important}#gateb{display:none !important}.jm-fade-up,.jm-zoom-in{opacity:1 !important;transform:none !important}#cover .invtype,#cover .name1,#cover .and,#cover .name2,#cover .cover-date{opacity:1 !important;transform:none !important}`}</style>
+          <style>{`.jm-shell[data-state="closed"] #page-invite{display:block !important;opacity:1 !important;transform:none !important}.jm-shell:not([data-state="opened"]) #jm-sticky-head,.jm-shell:not([data-state="opened"]) #footer{display:none !important}.jm-cover-layer{display:none !important}.jm-in{animation:none !important;opacity:1 !important;transform:none !important}`}</style>
         </noscript>
       </head>
       <body>{children}</body>

@@ -58,7 +58,7 @@ export default function CalendarSection() {
   return (
     <button
       type="button"
-      className="jm-outline-cta"
+      className="jm-btn"
       onClick={() => {
         window.dispatchEvent(new CustomEvent("jm:open", { detail: "calendar" }));
       }}
